@@ -24,7 +24,7 @@ public class InmuebleServicio {
     private UserRepositorio userRepositorio;
 
     @Transactional
-    public void crearInmueble(Long id, String direccion, String idDueño, String tiposInmueble) throws MiException {
+    public void crearInmueble(String id, String direccion, String idDueño, String tiposInmueble) throws MiException {
         validar(id, direccion, idDueño, tiposInmueble);
         Optional<User> respuestaUser = userRepositorio.findById(idDueño);
         User user = new User();
@@ -54,7 +54,7 @@ public class InmuebleServicio {
     }
 
     @Transactional
-    public void modificarInmueble(Long id, String direccion, String idDueño, String idInquilino, String tiposInmueble) throws MiException {
+    public void modificarInmueble(String id, String direccion, String idDueño, String idInquilino, String tiposInmueble) throws MiException {
         validar(id, direccion, idDueño, tiposInmueble);
         Optional<Inmueble> respuesta = inmuebleRepositorio.findById(id);
         Optional<User> respuestaUserDueño = userRepositorio.findById(idDueño);
@@ -84,12 +84,12 @@ public class InmuebleServicio {
         }
     }
 
-    public Inmueble getOne(Long id) {
+    public Inmueble getOne(String id) {
         return inmuebleRepositorio.getReferenceById(id);
     }
 
-    private void validar(Long id, String direccion, String idDueño, String tiposInmueble) throws MiException {
-        if (id == null) {
+    private void validar(String id, String direccion, String idDueño, String tiposInmueble) throws MiException {
+        if (id.isEmpty() || id == null) {
             throw new MiException("Id no puede ser nulo");
         }
         if (direccion.isEmpty() || direccion == null) {
