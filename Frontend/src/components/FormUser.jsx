@@ -1,14 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { useEffect } from 'react';
 import UserService from '../services/UserService';
 
 export const FormUser = () => {
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  })
 
   const date = new Date().getFullYear()
 
@@ -19,17 +15,20 @@ export const FormUser = () => {
     watch,
   } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
-    UserService.createUser(data)
-  });
+  const navigate = useNavigate()
 
+  const onSubmit = (data) => {
+    UserService.createUsers(data)
+      .then(
+        navigate("/usuarios")
+      )
+  }
 
   return (
     <div className='container mt-4'>
       <div className='row justify-content-center text-center'>
         <div className="col-md-4">
-          <form onSubmit={onSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <p className="h3 mb-3 fw-normal">Registrarse</p>
 
             <div className="form-floating mb-2">
@@ -49,39 +48,7 @@ export const FormUser = () => {
               <label htmlFor="floatingInputName">Nombre</label>
             </div>
 
-            <div className="form-floating mb-2">
-              <input type="text" className="form-control" id="floatingInputLastname" placeholder=""
-                {...register("apellido", {
-                  required: {
-                    value: true,
-                    message: "El apellido es obligatorio",
-                  },
-                  minLength: {
-                    value: 2,
-                    message: "El apellido debe tener al menos 2 caracteres",
-                  },
-                })}
-              />
-              {errors.apellido && <div className='alert alert-danger mt-2 py-2'>{errors.apellido.message}</div>}
-              <label htmlFor="floatingInputLastname">Apellido</label>
-            </div>
 
-            <div className="form-floating mb-2">
-              <input type="text" className="form-control" id="floatingInputDni" placeholder=""
-                {...register("dni", {
-                  required: {
-                    value: true,
-                    message: "El DNI es obligatorio",
-                  },
-                  minLength: {
-                    value: 7,
-                    message: "El tamaño minimo es de 7 numeros",
-                  },
-                })}
-              />
-              {errors.dni && <div className='alert alert-danger mt-2 py-2'>{errors.dni.message}</div>}
-              <label htmlFor="floatingInputDni">Dni</label>
-            </div>
 
             <div className="form-floating mb-3">
               <input type="email" className="form-control" id="floatingInputEmail" placeholder=""
@@ -129,18 +96,34 @@ export const FormUser = () => {
               <label htmlFor="confirmarPassword">Confirmar contraseña</label>
             </div>
 
+            <div className="form-floating mb-2">
+              <input type="text" className="form-control" id="floatingInputDni" placeholder=""
+                {...register("dni", {
+                  required: {
+                    value: true,
+                    message: "El DNI es obligatorio",
+                  },
+                  minLength: {
+                    value: 7,
+                    message: "El tamaño minimo es de 7 numeros",
+                  },
+                })}
+              />
+              {errors.dni && <div className='alert alert-danger mt-2 py-2'>{errors.dni.message}</div>}
+              <label htmlFor="floatingInputDni">Dni</label>
+            </div>
 
             <div className="form-floating mb-3">
-              <select {...register("tipoUsuario")} className="form-select" id="tipoUsuario" aria-label="Floating label select example">
-                <option value="cliente">Cliente</option>
-                <option value="propietario">Propietario</option>
+              <select {...register("rol")} className="form-select" id="rol  " aria-label="Floating label select example">
+                <option value="CLIENT">Cliente</option>
+                <option value="ENTE">Propietario</option>
               </select>
-              <label htmlFor="tipoUsuario">Tipo de usuario</label>
+              <label htmlFor="rol">Tipo de usuario</label>
             </div>
 
 
             <div className='d-grid gap-2 mt-4'>
-              <button className="btn btn-outline-primary py-2" type="submit">Registrar</button>
+              <button className="btn btn-outline-primary py-2" type="submit" value='Save'>Registrar</button>
               <Link to={'/'} className='btn btn-outline-secondary py-2 me-1'>
                 Cancelar
               </Link>

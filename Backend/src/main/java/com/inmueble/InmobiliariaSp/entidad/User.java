@@ -37,8 +37,7 @@ public class User {
         this.dni = dni;
     }
      */
-    public User(String id, String nombre, String email, String password, String dni, Rol rol) {
-        this.id = id;
+    public User(String nombre, String email, String password, String dni, Rol rol) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;

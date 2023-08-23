@@ -7,6 +7,7 @@ import { ContactDetails } from './components/ContactDetails';
 import { FormUser } from './components/FormUser';
 import { LogIn } from './components/LogIn';
 import { TestUser } from './components/TestUser';
+import { TestUserDetails } from './components/TestUserDetails';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/ingresar' element={<LogIn />} />
 
         <Route path='/usuarios' element={<TestUser/>}/>
+        <Route path='/usuarios/:id' element={<TestUserDetails/>}/>
       </Routes>
       <Footer />
     </Router>

@@ -1,17 +1,24 @@
 import axios from "axios";
 
-const URL = "http://localhost:8080/api/usuarios"
+const URL = "http://localhost:8080/api/"
 
 class UserService {
 
-    getUsers(){
-        return axios.get(URL)
+    getUsers() {
+        return axios.get(URL + "usuarios")
     }
 
-    createUser(user){
-        return axios.post(URL, user)
+    createUsers(user) {
+        return axios.post(URL + "registro", user)
     }
 
+    getById(userId){
+        return axios.get(URL + "usuarios" + '/' + userId)
+    }
+
+    deleteUser(userId){
+        return axios.delete(URL + "usuarios" + '/' + userId)
+    }
 
 }
 
