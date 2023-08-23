@@ -19,7 +19,10 @@ export const FormUser = () => {
 
   const onSubmit = (data) => {
     const { confirmarPassword, ...formData } = data;
-    console.log(formData)
+    UserService.createUsers(formData)
+      .then(
+        navigate("/usuarios")
+      )
   }
 
   return (

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import UserService from '../services/UserService'
 
 export const TestUserDetails = () => {
 
     const [user, setUser] = useState([])
     const { id } = useParams()
+    const navigate = useNavigate()
 
     useEffect(()=>{
         UserService.getById(id)
@@ -17,7 +18,7 @@ export const TestUserDetails = () => {
     const deleteUser = () => {
         UserService.deleteUser(id)
             .then(
-                console.log("Usuario eliminado")
+                navigate("/usuarios")
             )
     }
 
