@@ -17,6 +17,7 @@ public class User {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String nombre;
+    private String apellido;
     private String email;
     private String password;
     private String dni;
@@ -26,8 +27,9 @@ public class User {
     public User() {
     }
 
-    public User(String nombre, String email, String password, String dni, Rol rol) {
+    public User(String nombre, String apellido, String email, String password, String dni, Rol rol) {
         this.nombre = nombre;
+        this.apellido = apellido;
         this.email = email;
         this.password = password;
         this.dni = dni;
@@ -48,6 +50,14 @@ public class User {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getEmail() {
@@ -87,7 +97,7 @@ public class User {
     
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", nombre=" + nombre + ", email=" + email + ", password=" + password + ", dni=" + dni + '}';
+        return "User{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", password=" + password + ", dni=" + dni + '}';
     }
 
 }
