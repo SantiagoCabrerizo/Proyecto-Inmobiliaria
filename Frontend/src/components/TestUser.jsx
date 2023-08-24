@@ -8,10 +8,8 @@ export const TestUser = () => {
 
     useEffect(() => {
         UserService.getUsers()
-            .then(res => setUser(res.data)) 
+            .then(res => setUser(res.data))
     }, [])
-
-    
 
     return (
         <div>
