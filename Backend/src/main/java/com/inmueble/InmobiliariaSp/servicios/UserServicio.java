@@ -31,10 +31,7 @@ public class UserServicio {
             throw new MiException("El dni ingresado ya se encuentra registrado.");
         }
         if (user.getNombre() == null || user.getNombre().isEmpty()) {
-            throw new MiException("No se a procesado el nombre");
-        }
-        if (user.getApellido() == null || user.getApellido().isEmpty()){
-            throw new MiException("No se a procesado el apellido");
+            throw new MiException("No se ha procesado el nombre");
         }
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             throw new MiException("El email no existe o es nullo");
