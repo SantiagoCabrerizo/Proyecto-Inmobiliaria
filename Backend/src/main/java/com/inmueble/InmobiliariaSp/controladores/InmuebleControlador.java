@@ -2,7 +2,6 @@ package com.inmueble.InmobiliariaSp.controladores;
 
 import com.inmueble.InmobiliariaSp.entidad.Inmueble;
 import com.inmueble.InmobiliariaSp.repositorios.InmuebleRepositorio;
-import com.inmueble.InmobiliariaSp.servicios.InmuebleServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/inmueble/")
 public class InmuebleControlador {
-        
+
     @Autowired
     private InmuebleRepositorio inmuebleRepositorio;
-    
+
     @GetMapping("/inmuebles")
     public List<Inmueble> listarUsuarios() {
         return inmuebleRepositorio.findAll();
@@ -51,5 +50,5 @@ public class InmuebleControlador {
             return new ResponseEntity<>("Error al eliminar el Inmueble", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
 }

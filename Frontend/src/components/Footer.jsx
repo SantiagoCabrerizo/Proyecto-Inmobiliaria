@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
 
@@ -40,6 +41,9 @@ export const Footer = () => {
 
                 <div className="derechos-de-autor">&#169; Creado por Equipo 2 - {date}</div>
 
+                <Link to={"/usuarios"} className='derechos-de-autor'>
+                    Listado usuarios (ADMIN)
+                </Link>
 
                 <button className="btn btn-outline-light fs-5" id='button-handleTop' onClick={handleScrollToTop}>
                     <i className="bi bi-arrow-up"></i>

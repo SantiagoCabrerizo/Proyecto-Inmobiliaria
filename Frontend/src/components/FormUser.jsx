@@ -1,17 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-import { useEffect } from 'react';
 import UserService from '../services/UserService';
 
 export const FormUser = () => {
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  })
 
   const date = new Date().getFullYear()
-
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -19,15 +15,20 @@ export const FormUser = () => {
     watch,
   } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
-    UserService.createUser(data)
-  });
+  const onSubmit = (data) => {
+    const { confirmarPassword, ...formData } = data;
+    console.log(formData)
+    UserService.createUsers(formData)
+      .then(
+        navigate("/usuarios")
+      )
+  }
+
   return (
     <div className='container mt-4'>
       <div className='row justify-content-center text-center'>
         <div className="col-md-4">
-          <form onSubmit={onSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <p className="h3 mb-3 fw-normal">Registrarse</p>
 
             <div className="form-floating mb-2">
@@ -129,11 +130,11 @@ export const FormUser = () => {
 
 
             <div className="form-floating mb-3">
-              <select {...register("tipoUsuario")} className="form-select" id="tipoUsuario" aria-label="Floating label select example">
-                <option value="cliente">Cliente</option>
-                <option value="propietario">Propietario</option>
+              <select {...register("rol")} className="form-select" id="rol" aria-label="Floating label select example">
+                <option value="CLIENT">Cliente</option>
+                <option value="ENTE">Propietario</option>
               </select>
-              <label htmlFor="tipoUsuario">Tipo de usuario</label>
+              <label htmlFor="rol">Tipo de usuario</label>
             </div>
 
 
