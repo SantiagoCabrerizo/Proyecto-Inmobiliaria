@@ -15,7 +15,7 @@ export const TestUser = () => {
 
     return (
         <div>
-            <table className='table table-hover container'>
+            <table className='table table-hover container mt-5 mb-5'>
                 <thead>
                     <tr>
                         <th>Name</th>
