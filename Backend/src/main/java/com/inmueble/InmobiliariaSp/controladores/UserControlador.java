@@ -1,8 +1,9 @@
 package com.inmueble.InmobiliariaSp.controladores;
 
 import com.inmueble.InmobiliariaSp.entidad.User;
+import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
-import com.inmueble.InmobiliariaSp.servicios.UserServicios;
+import com.inmueble.InmobiliariaSp.servicios.UserServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ public class UserControlador {
     
     @Autowired
     private UserRepositorio userRepositorio;
+    @Autowired
+    private UserServicio userServicio;
 
     //Read Users
     @GetMapping("/usuarios")
@@ -32,18 +35,23 @@ public class UserControlador {
 
     //Create Users
     @PostMapping("/registro")
-    public User ingresarUsuario(@RequestBody User user) {
-        return userRepositorio.save(user);
+    public ResponseEntity<String> crearUsuario(@RequestBody User user) throws MiException {
+        try {
+            userServicio.crearUsuario(user);
+            return ResponseEntity.ok("Usuario creado exitosamente");
+        } catch (MiException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     //Get User By Id
-    @GetMapping("/usuarios/{id}")
+    @GetMapping("/{id}")
     public User getById(@PathVariable String id) {
         return userRepositorio.getReferenceById(id);
     }
 
     //Delete Users
-    @DeleteMapping("/usuarios/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
         try {
             userRepositorio.deleteById(id);

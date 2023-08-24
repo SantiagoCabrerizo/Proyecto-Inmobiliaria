@@ -1,5 +1,6 @@
 package com.inmueble.InmobiliariaSp.entidad;
 
+import com.inmueble.InmobiliariaSp.enumeraciones.TipoNegocio;
 import com.inmueble.InmobiliariaSp.enumeraciones.TiposInmueble;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -26,7 +27,12 @@ public class Inmueble {
     private User inquilino;
     @Enumerated(EnumType.STRING)
     private TiposInmueble tiposInmueble;
-
+    @Enumerated(EnumType.STRING)
+    private TipoNegocio tipoNegocio;
+    private int valorAlquiler;
+    private int valorVenta;
+    
+            
     public Inmueble() {
     }
 
@@ -76,7 +82,6 @@ public class Inmueble {
         this.dueño = dueño;
         this.inquilino = inquilino;
         this.tiposInmueble = tiposInmueble;
-
     }
 
 }
