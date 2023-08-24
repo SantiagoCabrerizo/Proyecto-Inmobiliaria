@@ -23,8 +23,6 @@ export const FormUser = () => {
     console.log(data)
     UserService.createUser(data)
   });
-
-
   return (
     <div className='container mt-4'>
       <div className='row justify-content-center text-center'>

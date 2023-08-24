@@ -12,7 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InmuebleRepositorio extends JpaRepository<Inmueble, String> {
 
-    @Query("SELECT l FROM Inmueble l WHERE l.tiposInmueble = :tiposInmueble")
-    public List<Inmueble> buscarPorTiposInmueble(@Param("tiposInmueble") TiposInmueble tiposInmueble);
 
 }

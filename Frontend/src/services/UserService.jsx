@@ -4,20 +4,20 @@ const URL = "http://localhost:8080/api/user/"
 
 class UserService {
 
-    getUsers() {
+    getUser() {
         return axios.get(URL + "usuarios")
     }
 
-    createUsers(user) {
+    createUser(user) {
         return axios.post(URL + "registro", user)
     }
 
     getById(userId){
-        return axios.get(URL + "usuarios" + '/' + userId)
+        return axios.get(URL+ userId)
     }
 
     deleteUser(userId){
-        return axios.delete(URL + "usuarios" + '/' + userId)
+        return axios.delete(URL+ userId)
     }
 
 }

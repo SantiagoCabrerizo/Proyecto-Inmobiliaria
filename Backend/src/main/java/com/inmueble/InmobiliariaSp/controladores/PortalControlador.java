@@ -3,7 +3,6 @@ package com.inmueble.InmobiliariaSp.controladores;
 import com.inmueble.InmobiliariaSp.entidad.User;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
-import com.inmueble.InmobiliariaSp.servicios.UserServicios;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/")
 public class PortalControlador {
     
-    @Autowired
-    private UserServicios userServicios;
-    @Autowired
-    private UserRepositorio userRepositorio;
-    
-    //Listar usuarios
-    @GetMapping("/usuarios")
-    public List<User> listarUsuarios() {
-        return userRepositorio.findAll();
-    }
-    
-    
+//    @Autowired
+//    private UserServicios userServicios;
+//    @Autowired
+//    private UserRepositorio userRepositorio;
+//    
+//    //Listar usuarios
+//    @GetMapping("/usuarios")
+//    public List<User> listarUsuarios() {
+//        return userRepositorio.findAll();
+//    }
+//    
+//    
 }

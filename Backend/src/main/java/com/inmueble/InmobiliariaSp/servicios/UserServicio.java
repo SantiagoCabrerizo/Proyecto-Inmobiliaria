@@ -5,7 +5,6 @@ import com.inmueble.InmobiliariaSp.enumeraciones.Rol;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
 import java.util.List;
-import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +33,9 @@ public class UserServicio {
         if (user.getNombre() == null || user.getNombre().isEmpty()) {
             throw new MiException("No se a procesado el nombre");
         }
+        if (user.getApellido() == null || user.getApellido().isEmpty()){
+            throw new MiException("No se a procesado el apellido");
+        }
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             throw new MiException("El email no existe o es nullo");
         }
@@ -54,19 +56,19 @@ public class UserServicio {
             throw new MiException("Rol no es válido");
         }
     }
-    //metodo listar usuarios
+    
     public List<User> listarUsuarios() {
         return userRepositorio.findAll();
     }
     
     public boolean isEmailUnique(String email) {
         User existingUser = userRepositorio.findByEmail(email);
-        return existingUser == null;
+        return existingUser != null;
     }
 
     public boolean isDniUnique(String dni) {
         User existingUser = userRepositorio.findByDni(dni);
-        return existingUser == null;
+        return existingUser != null;
     }
 
 //     //configuracion pre-creada que me permite darle el permiso deseado a un usuario
