@@ -1,6 +1,7 @@
 package com.inmueble.InmobiliariaSp.servicios;
 
 import com.inmueble.InmobiliariaSp.config.UserDetailsImpl;
+import com.inmueble.InmobiliariaSp.contenedores.UserForm;
 import com.inmueble.InmobiliariaSp.entidad.User;
 import com.inmueble.InmobiliariaSp.enumeraciones.Rol;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
@@ -22,40 +23,51 @@ public class UserServicio implements UserDetailsService {
     private UserRepositorio userRepositorio;
     
     @Transactional
-    public void crearUsuario(User user) throws MiException {
-        validar(user);
-        String password = user.getPassword();
+    public void crearUsuarioDesdeUserForm(UserForm userForm) throws MiException {
+        validar(userForm);
+        User user = new User();
+        user.setApellido(userForm.getApellido());
+        user.setDni(userForm.getDni());
+        user.setEmail(userForm.getEmail());
+        user.setNombre(userForm.getNombre());
+        Rol[] validar = Rol.getValues();
+        for (Rol tipo : validar) {
+            if (tipo.toString().equalsIgnoreCase(userForm.getRol())) {
+                user.setRol(tipo);
+            }
+        }
+        String password = userForm.getPassword();
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         userRepositorio.save(user);
     }
 
     
-    public void validar(User user) throws MiException {
-        if (isEmailUnique(user.getEmail())){
+    public void validar(UserForm userForm) throws MiException {
+        if (isEmailUnique(userForm.getEmail())){
             throw new MiException("El email ingresado ya se encuentra registrado.");
         }
-        if (isDniUnique(user.getDni())){
+        if (isDniUnique(userForm.getDni())){
             throw new MiException("El dni ingresado ya se encuentra registrado.");
         }
-        if (user.getNombre() == null || user.getNombre().isEmpty()) {
+        if (userForm.getNombre() == null || userForm.getNombre().isEmpty()) {
             throw new MiException("No se ha procesado el nombre");
         }
-        if (user.getApellido()== null || user.getApellido().isEmpty()) {
+        if (userForm.getApellido()== null || userForm.getApellido().isEmpty()) {
             throw new MiException("No se ha procesado el apellido");
         }
-        if (user.getEmail() == null || user.getEmail().isEmpty()) {
+        if (userForm.getEmail() == null || userForm.getEmail().isEmpty()) {
             throw new MiException("El email no existe o es nullo");
         }
-        if (user.getPassword()== null || user.getPassword().isEmpty()) {
+        if (userForm.getPassword()== null || userForm.getPassword().isEmpty()) {
             throw new MiException("La contrasena es incorrecta");
         }
-        if (user.getDni() == null || user.getDni().isEmpty()) {
+        if (userForm.getDni() == null || userForm.getDni().isEmpty()) {
             throw new MiException("DNI incorrecto");
         }
         boolean validarRol = true;
         Rol[] validar = Rol.getValues();
         for (Rol tipo : validar) {
-            if (tipo.equals(user.getRol())) {
+            if (tipo.toString().equalsIgnoreCase(userForm.getRol())) {
                 validarRol = false;
             }
         }
@@ -82,6 +94,7 @@ public class UserServicio implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User respuestaUserDni = userRepositorio.findByDni(username);
         User respuestaUserEmail = userRepositorio.findByEmail(username);
+        Optional<User> respuestaUserId = userRepositorio.findById(username);
         User user;
         if(respuestaUserDni != null){
             user = respuestaUserDni;
@@ -89,7 +102,11 @@ public class UserServicio implements UserDetailsService {
             if(respuestaUserEmail != null){
                 user = respuestaUserEmail;
             } else {
+                if(respuestaUserId.isPresent()){
+                    user = respuestaUserId.get();
+                } else {
                 throw new UsernameNotFoundException("Usuario no encontrado: " + username);
+                }
             }
         }
 

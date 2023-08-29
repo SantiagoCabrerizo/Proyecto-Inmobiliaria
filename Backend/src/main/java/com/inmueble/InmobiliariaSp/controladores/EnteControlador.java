@@ -33,15 +33,15 @@ public class EnteControlador {
 //        return inmuebleRepositorio.findByDueño();
 //    }
 
-    @PostMapping("/{id}/inmueble/alta")
-    public ResponseEntity<String> crearInmueble(@PathVariable String idUser, @RequestBody Inmueble inmueble) throws MiException {
-        try {
-            inmuebleServicio.crearInmueble(inmueble, idUser);
-            return ResponseEntity.ok("Usuario creado exitosamente");
-        } catch (MiException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
+//    @PostMapping("/inmueble/alta")
+//    public ResponseEntity<String> crearInmueble(InmuebleForm inmuebleForm) throws MiException {
+//        try {
+//            inmuebleServicio.crearInmueble(inmueble, idUser);
+//            return ResponseEntity.ok("Usuario creado exitosamente");
+//        } catch (MiException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//        }
+//    }
 //
 //    //Get User By Id
 //    @GetMapping("/{id}")

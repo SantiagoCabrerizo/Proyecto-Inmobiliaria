@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/public/**").permitAll() // Rutas públicas
                 .antMatchers(HttpMethod.POST, "/api/user/registro").permitAll() // Permitir POST para registro
-                .antMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/auth/login").anonymous()
                 .anyRequest().authenticated() // Otras rutas requieren autenticación
                 .and()
                 .exceptionHandling()

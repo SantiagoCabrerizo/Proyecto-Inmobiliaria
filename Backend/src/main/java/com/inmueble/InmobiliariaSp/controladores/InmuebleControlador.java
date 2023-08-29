@@ -1,11 +1,17 @@
 package com.inmueble.InmobiliariaSp.controladores;
 
+import com.inmueble.InmobiliariaSp.config.UserDetailsImpl;
+import com.inmueble.InmobiliariaSp.contenedores.InmuebleForm;
 import com.inmueble.InmobiliariaSp.entidad.Inmueble;
+import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.InmuebleRepositorio;
+import com.inmueble.InmobiliariaSp.servicios.InmuebleServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +28,9 @@ public class InmuebleControlador {
 
     @Autowired
     private InmuebleRepositorio inmuebleRepositorio;
+    
+    @Autowired
+    private InmuebleServicio inmuebleServicio;
 
     @GetMapping("/inmuebles")
     public List<Inmueble> listarUsuarios() {
@@ -30,8 +39,16 @@ public class InmuebleControlador {
 
     //Create Users
     @PostMapping("/registroInmueble")
-    public Inmueble ingresarInmueble(@RequestBody Inmueble inmueble) {
-        return inmuebleRepositorio.save(inmueble);
+    @PreAuthorize("hasRole('ENTE')")
+    public ResponseEntity<String> ingresarInmueble(@RequestBody InmuebleForm inmuebleForm, Authentication authentication) throws MiException {
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            String userId = userDetails.getId();
+            try {
+            inmuebleServicio.crearInmuebleDesdeInmuebleForm(inmuebleForm, userId);
+            return ResponseEntity.ok("Inmueble creado exitosamente");
+        } catch (MiException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     //Get User By Id

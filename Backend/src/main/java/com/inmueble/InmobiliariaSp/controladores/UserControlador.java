@@ -1,5 +1,6 @@
 package com.inmueble.InmobiliariaSp.controladores;
 
+import com.inmueble.InmobiliariaSp.contenedores.UserForm;
 import com.inmueble.InmobiliariaSp.entidad.User;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,15 +31,16 @@ public class UserControlador {
 
     //Read Users
     @GetMapping("/usuarios")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<User> listarUsuarios() {
         return userRepositorio.findAll();
     }
 
     //Create Users
     @PostMapping("/registro")
-    public ResponseEntity<String> crearUsuario(@RequestBody User user) throws MiException {
+    public ResponseEntity<String> crearUsuario(@RequestBody UserForm userForm) throws MiException {
         try {
-            userServicio.crearUsuario(user);
+            userServicio.crearUsuarioDesdeUserForm(userForm);
             return ResponseEntity.ok("Usuario creado exitosamente");
         } catch (MiException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -52,6 +55,7 @@ public class UserControlador {
 
     //Delete Users
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
         try {
             userRepositorio.deleteById(id);
