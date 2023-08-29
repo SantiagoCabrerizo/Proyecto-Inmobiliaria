@@ -1,17 +1,22 @@
 package com.inmueble.InmobiliariaSp.servicios;
 
+import com.inmueble.InmobiliariaSp.config.UserDetailsImpl;
 import com.inmueble.InmobiliariaSp.entidad.User;
 import com.inmueble.InmobiliariaSp.enumeraciones.Rol;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-//implements UserDetailsService
-public class UserServicio {
+public class UserServicio implements UserDetailsService {
 
     @Autowired
     private UserRepositorio userRepositorio;
@@ -19,6 +24,8 @@ public class UserServicio {
     @Transactional
     public void crearUsuario(User user) throws MiException {
         validar(user);
+        String password = user.getPassword();
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
         userRepositorio.save(user);
     }
 
@@ -70,30 +77,22 @@ public class UserServicio {
         User existingUser = userRepositorio.findByDni(dni);
         return existingUser != null;
     }
+    
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User respuestaUserDni = userRepositorio.findByDni(username);
+        User respuestaUserEmail = userRepositorio.findByEmail(username);
+        User user;
+        if(respuestaUserDni != null){
+            user = respuestaUserDni;
+        } else {
+            if(respuestaUserEmail != null){
+                user = respuestaUserEmail;
+            } else {
+                throw new UsernameNotFoundException("Usuario no encontrado: " + username);
+            }
+        }
 
-//     //configuracion pre-creada que me permite darle el permiso deseado a un usuario
-//    @Override
-//    // el email sera el "nombre" con el que reprecento el usuario
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        User usuario = usuarioRepositorio.buscarPorEmail(email);
-//        
-//        if(usuario != null){
-//            
-//            List <GrantedAuthority> permisos = new ArrayList();
-//            
-//            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().toString()); //ROLE_USER
-//            
-//            permisos.add(p);
-//            
-//            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-//            
-//            HttpSession session = attr.getRequest().getSession(true);
-//             
-//            session.setAttribute("usuariosession", usuario);
-//            
-//            return new User(usuario.getEmail(),usuario.getPassword(),permisos);
-//        }else{
-//            return null;
-//        }
-//    }
+        return UserDetailsImpl.build(user);
+    }
 }

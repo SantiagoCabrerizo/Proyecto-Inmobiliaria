@@ -34,26 +34,26 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}") // Cargar esta propiedad desde tu archivo de configuración
     private int jwtExpiration;
 
-    public String generateToken(Authentication authentication) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+public String generateToken(Authentication authentication) {
+    UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
-        List<String> roles = userPrincipal.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+    List<String> roles = userPrincipal.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.toList());
 
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + jwtExpiration);
+    Date now = new Date();
+    Date expiryDate = new Date(now.getTime() + jwtExpiration);
 
-        Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+    Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 
-        return Jwts.builder()
-                .setSubject(userPrincipal.getId())
-                .claim("roles", roles) // Agregar los roles como una claim personalizada
-                .setIssuedAt(new Date())
-                .setExpiration(expiryDate)
-                .signWith(key)
-                .compact();
-    }
+    return Jwts.builder()
+            .setSubject(userPrincipal.getId()) // Usa getUserId() en lugar de getId()
+            .claim("roles", roles) // Agregar los roles como una claim personalizada
+            .setIssuedAt(new Date())
+            .setExpiration(expiryDate)
+            .signWith(key)
+            .compact();
+}
 
     public String getUserIdFromJWT(String token) {
         Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
