@@ -37,20 +37,15 @@ public class AuthControlador {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginForm loginForm) {
-        UserDetails userDetails = userServicio.loadUserByUsername(loginForm.getUsername());
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword())
+        );
 
-        if (passwordEncoder.matches(loginForm.getPassword(), userDetails.getPassword())) {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword())
-            );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal(); // Cambio UserDetailsImpl a UserDetails
 
-            String token = jwtTokenProvider.generateToken(authentication);
-            return ResponseEntity.ok(new JwtResponse(token));
-        } else {
-            // La contraseña no coincide, devolver una respuesta de error
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        String token = jwtTokenProvider.generateToken(authentication);
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 }
