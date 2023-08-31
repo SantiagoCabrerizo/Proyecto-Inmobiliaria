@@ -76,12 +76,34 @@ public class Inmueble {
         this.tiposInmueble = tiposInmueble;
     }
 
-    public Inmueble(String id, String direccion, User dueño, User inquilino, TiposInmueble tiposInmueble) {
-        this.id = id;
+    public TipoNegocio getTipoNegocio() {
+        return tipoNegocio;
+    }
+
+    public void setTipoNegocio(TipoNegocio tipoNegocio) {
+        this.tipoNegocio = tipoNegocio;
+    }
+
+    public int getValorAlquiler() {
+        return valorAlquiler;
+    }
+
+    public void setValorAlquiler(int valorAlquiler) {
+        this.valorAlquiler = valorAlquiler;
+    }
+
+    public int getValorVenta() {
+        return valorVenta;
+    }
+
+    public void setValorVenta(int valorVenta) {
+        this.valorVenta = valorVenta;
+    }
+
+    public Inmueble(String direccion, TiposInmueble tiposInmueble) {
         this.direccion = direccion;
-        this.dueño = dueño;
-        this.inquilino = inquilino;
         this.tiposInmueble = tiposInmueble;
     }
+    
 
 }
