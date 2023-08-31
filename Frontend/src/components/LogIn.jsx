@@ -14,7 +14,6 @@ export const LogIn = () => {
         register,
         handleSubmit,
         formState: { errors },
-        watch,
     } = useForm()
 
     const onSubmit = handleSubmit((data) => {
