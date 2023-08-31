@@ -1,13 +1,18 @@
 
 package com.inmueble.InmobiliariaSp.controladores;
 
+
 import com.inmueble.InmobiliariaSp.entidad.Inmueble;
+import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.InmuebleRepositorio;
-import java.util.List;
+import com.inmueble.InmobiliariaSp.servicios.InmuebleServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,20 +20,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/ente/")
 public class EnteControlador {
-//
-//    @Autowired
-//    private InmuebleRepositorio inmuebleRepositorio;
-//
+
+    @Autowired
+    private InmuebleRepositorio inmuebleRepositorio;
+    
+    @Autowired
+    private InmuebleServicio inmuebleServicio;
+
 //    //Read Users
 //    @GetMapping("/misInmuebles")
 //    public List<Inmueble> listarInmuebles(@PathVariable String enteId) {
 //        return inmuebleRepositorio.findByDueño();
 //    }
 
-//    //Create Users
-//    @PostMapping("/registro")
-//    public Inmueble ingresarInmueble(@RequestBody Inmueble inmueble) {
-//        return userRepositorio.save(user);
+//    @PostMapping("/inmueble/alta")
+//    public ResponseEntity<String> crearInmueble(InmuebleForm inmuebleForm) throws MiException {
+//        try {
+//            inmuebleServicio.crearInmueble(inmueble, idUser);
+//            return ResponseEntity.ok("Usuario creado exitosamente");
+//        } catch (MiException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+//        }
 //    }
 //
 //    //Get User By Id
