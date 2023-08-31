@@ -4,6 +4,8 @@
  */
 package com.inmueble.InmobiliariaSp.contenedores;
 
+import org.springframework.web.multipart.MultipartFile;
+
 
 
 /**
@@ -13,17 +15,19 @@ package com.inmueble.InmobiliariaSp.contenedores;
 public class InmuebleForm {
 
     private String direccion;
+    private String caracteristicas;
     private String tiposInmueble;
     private String tipoNegocio;
-    private String valorAlquiler;
-    private String valorVenta;
+    private String valor;
+    private MultipartFile foto;
 
-    public InmuebleForm(String direccion, String tiposInmueble, String tipoNegocio, String valorAlquiler, String valorVenta) {
+    public InmuebleForm(String direccion, String caracteristicas, String tiposInmueble, String tipoNegocio, String valor, MultipartFile foto) {
         this.direccion = direccion;
+        this.caracteristicas = caracteristicas;
         this.tiposInmueble = tiposInmueble;
         this.tipoNegocio = tipoNegocio;
-        this.valorAlquiler = valorAlquiler;
-        this.valorVenta = valorVenta;
+        this.valor = valor;
+        this.foto = foto;
     }
 
     public String getDireccion() {
@@ -32,6 +36,14 @@ public class InmuebleForm {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(String caracteristicas) {
+        this.caracteristicas = caracteristicas;
     }
 
     public String getTiposInmueble() {
@@ -50,21 +62,35 @@ public class InmuebleForm {
         this.tipoNegocio = tipoNegocio;
     }
 
-    public String getValorAlquiler() {
-        return valorAlquiler;
+    public String getValor() {
+        return valor;
     }
 
-    public void setValorAlquiler(String valorAlquiler) {
-        this.valorAlquiler = valorAlquiler;
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 
-    public String getValorVenta() {
-        return valorVenta;
+    public MultipartFile getFoto() {
+        return foto;
     }
 
-    public void setValorVenta(String valorVenta) {
-        this.valorVenta = valorVenta;
+    public void setFoto(MultipartFile foto) {
+        this.foto = foto;
     }
-    
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("InmuebleForm{");
+        sb.append("direccion=").append(direccion);
+        sb.append(", caracteristicas=").append(caracteristicas);
+        sb.append(", tiposInmueble=").append(tiposInmueble);
+        sb.append(", tipoNegocio=").append(tipoNegocio);
+        sb.append(", valor=").append(valor);
+        sb.append(", foto=").append(foto);
+        sb.append('}');
+        return sb.toString();
+    }
+
     
 }
