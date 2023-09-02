@@ -28,19 +28,19 @@ public class InmuebleControlador {
         return inmuebleRepositorio.findAll();
     }
 
-    //Create Users
+    //Create Inmueble
     @PostMapping("/registroInmueble")
     public Inmueble ingresarInmueble(@RequestBody Inmueble inmueble) {
         return inmuebleRepositorio.save(inmueble);
     }
 
-    //Get User By Id
+    //Get Inmueble By Id
     @GetMapping("/{id}")
     public Inmueble getById(@PathVariable String id) {
         return inmuebleRepositorio.getReferenceById(id);
     }
 
-    //Delete Users
+    //Delete Inmueble
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteInmueble(@PathVariable String id) {
         try {

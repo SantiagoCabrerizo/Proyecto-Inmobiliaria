@@ -11,8 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
-
-
 @Entity
 public class Inmueble {
 
@@ -21,6 +19,7 @@ public class Inmueble {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String direccion;
+    private String caracteristicas;
     @ManyToOne
     private User dueño;
     @OneToOne
@@ -29,10 +28,8 @@ public class Inmueble {
     private TiposInmueble tiposInmueble;
     @Enumerated(EnumType.STRING)
     private TipoNegocio tipoNegocio;
-    private int valorAlquiler;
-    private int valorVenta;
-    
-            
+    private int valor;
+
     public Inmueble() {
     }
 
@@ -59,11 +56,11 @@ public class Inmueble {
     public void setDueño(User dueño) {
         this.dueño = dueño;
     }
-    
+
     public User getInquilino() {
         return inquilino;
     }
-    
+
     public void setInquilino(User inquilino) {
         this.inquilino = inquilino;
     }
@@ -76,12 +73,33 @@ public class Inmueble {
         this.tiposInmueble = tiposInmueble;
     }
 
-    public Inmueble(String id, String direccion, User dueño, User inquilino, TiposInmueble tiposInmueble) {
-        this.id = id;
+    public TipoNegocio getTipoNegocio() {
+        return tipoNegocio;
+    }
+
+    public void setTipoNegocio(TipoNegocio tipoNegocio) {
+        this.tipoNegocio = tipoNegocio;
+    }
+
+    public int getValor() {
+        return valor;
+    }
+
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    public Inmueble(String direccion, TiposInmueble tiposInmueble) {
         this.direccion = direccion;
-        this.dueño = dueño;
-        this.inquilino = inquilino;
         this.tiposInmueble = tiposInmueble;
+    }
+
+    public String getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(String caracteristicas) {
+        this.caracteristicas = caracteristicas;
     }
 
 }

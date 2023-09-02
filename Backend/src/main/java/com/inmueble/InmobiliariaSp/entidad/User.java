@@ -51,7 +51,7 @@ public class User {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
     public String getApellido() {
         return apellido;
     }
@@ -92,9 +92,6 @@ public class User {
         this.rol = rol;
     }
 
-
- 
-    
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", password=" + password + ", dni=" + dni + '}';
