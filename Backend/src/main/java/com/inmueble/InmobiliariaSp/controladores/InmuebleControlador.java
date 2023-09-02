@@ -6,6 +6,7 @@ import com.inmueble.InmobiliariaSp.contenedores.InmuebleForm;
 import com.inmueble.InmobiliariaSp.entidad.Inmueble;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.InmuebleRepositorio;
+import com.inmueble.InmobiliariaSp.servicios.ImagenServicio;
 import com.inmueble.InmobiliariaSp.servicios.InmuebleServicio;
 import java.util.Collection;
 import java.util.List;
@@ -19,11 +20,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:5173/")
 @RestController
@@ -37,6 +41,9 @@ public class InmuebleControlador {
     private InmuebleServicio inmuebleServicio;
     
     @Autowired
+    private ImagenServicio imagenServicio;
+    
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/inmuebles")
@@ -44,13 +51,11 @@ public class InmuebleControlador {
         return inmuebleRepositorio.findAll();
     }
 
-<<<<<<< HEAD
-    //Create Inmueble
-=======
     @PreAuthorize("hasRole('ROLE_ENTE')")
->>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     @PostMapping("/registroInmueble")
-    public ResponseEntity<String> ingresarInmueble(@RequestBody InmuebleForm inmuebleForm, HttpServletRequest request) throws MiException {
+    public ResponseEntity<String> ingresarInmueble(@ModelAttribute InmuebleForm inmuebleForm,
+                                               @RequestParam("foto") MultipartFile foto,
+                                               HttpServletRequest request) throws MiException {
         String token = jwtTokenProvider.resolveToken(request);
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
@@ -59,7 +64,8 @@ public class InmuebleControlador {
             System.out.println("UserId:"+userId);
             System.out.println("UserRol:"+userRol);
             try {
-                inmuebleServicio.crearInmuebleDesdeInmuebleForm(inmuebleForm, userId);
+                Inmueble inmueble = inmuebleServicio.crearInmuebleDesdeInmuebleForm(inmuebleForm, userId);
+                imagenServicio.guardar(foto, inmueble.getId());
                 return ResponseEntity.ok("Inmueble creado exitosamente");
             } catch (MiException e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -74,13 +80,13 @@ public class InmuebleControlador {
 
 
 
-    //Get Inmueble By Id
+    //Get User By Id
     @GetMapping("/{id}")
     public Inmueble getById(@PathVariable String id) {
         return inmuebleRepositorio.getReferenceById(id);
     }
 
-    //Delete Inmueble
+    //Delete Users
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteInmueble(@PathVariable String id) {
         try {

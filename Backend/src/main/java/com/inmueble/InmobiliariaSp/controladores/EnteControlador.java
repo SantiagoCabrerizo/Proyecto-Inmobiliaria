@@ -1,3 +1,4 @@
+
 package com.inmueble.InmobiliariaSp.controladores;
 
 
@@ -22,11 +23,7 @@ public class EnteControlador {
 
     @Autowired
     private InmuebleRepositorio inmuebleRepositorio;
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     @Autowired
     private InmuebleServicio inmuebleServicio;
 
@@ -35,10 +32,7 @@ public class EnteControlador {
 //    public List<Inmueble> listarInmuebles(@PathVariable String enteId) {
 //        return inmuebleRepositorio.findByDueño();
 //    }
-<<<<<<< HEAD
-=======
 
->>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
 //    @PostMapping("/inmueble/alta")
 //    public ResponseEntity<String> crearInmueble(InmuebleForm inmuebleForm) throws MiException {
 //        try {

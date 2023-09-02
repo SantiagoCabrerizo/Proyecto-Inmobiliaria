@@ -1,10 +1,7 @@
-<<<<<<< HEAD
-=======
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
->>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
 package com.inmueble.InmobiliariaSp.servicios;
 
 import com.inmueble.InmobiliariaSp.entidad.Imagen;
@@ -20,21 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ImagenServicio {
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     @Autowired
     private InmuebleRepositorio inmuebleRepositorio;
     @Autowired
     private ImagenRepositorio imagenRepositorio;
-<<<<<<< HEAD
-
-=======
     
     
->>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     public void guardar(MultipartFile archivo, String inmuebleId) throws MiException {
         if (inmuebleId != null) {
             Optional<Inmueble> respuestaInmueble = inmuebleRepositorio.findById(inmuebleId);
@@ -60,13 +49,8 @@ public class ImagenServicio {
             throw new MiException("El id de inmueble no puede ser nulo");
         }
     }
-<<<<<<< HEAD
-
-    public void actualizar(MultipartFile archivo, String imagenId) throws MiException {
-=======
     
     public void actualizar(MultipartFile archivo, String imagenId) throws MiException{
->>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
         if (imagenId != null) {
             Optional<Imagen> respuestaImagen = imagenRepositorio.findById(imagenId);
             if (respuestaImagen.isPresent()) {
@@ -90,9 +74,5 @@ public class ImagenServicio {
             throw new MiException("El id de imagen no puede ser nulo");
         }
     }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
 }
