@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -95,6 +96,11 @@ public class InmuebleControlador {
         } catch (Exception e) {
             return new ResponseEntity<>("Error al eliminar el Inmueble", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    @GetMapping("/listar")
+    public Page<Object[]> getInmueblesWithOffset(@RequestParam int offset) {
+        return inmuebleServicio.getInmueblesWithOffset(offset);
     }
 
 }

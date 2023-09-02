@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -70,7 +73,11 @@ public class InmuebleServicio {
     public List<Inmueble> listarInmueblesPorDueño(User dueño) {
         return inmuebleRepositorio.findByDueño(dueño);
     }
-
+    
+    public Page<Object[]> getInmueblesWithOffset(int offset) {
+        Pageable pageable = PageRequest.of(offset, 6); // 6 inmuebles por página
+        return inmuebleRepositorio.getInmueblesWithOffset(pageable);
+    }
 //    @Transactional
 //    public void modificarInmueble(String id, String direccion, String idDueño, String idInquilino, String tiposInmueble) throws MiException {
 //        validar(id, direccion, idDueño, tiposInmueble);
