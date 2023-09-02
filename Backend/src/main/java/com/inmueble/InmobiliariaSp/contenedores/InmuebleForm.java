@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.inmueble.InmobiliariaSp.contenedores;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,34 @@ public class InmuebleForm {
         this.tipoNegocio = tipoNegocio;
         this.valor = valor;
         this.foto = foto;
+=======
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.inmueble.InmobiliariaSp.contenedores;
+
+
+
+/**
+ *
+ * @author 4rm4c
+ */
+public class InmuebleForm {
+
+    private String direccion;
+    private String tiposInmueble;
+    private String tipoNegocio;
+    private String valorAlquiler;
+    private String valorVenta;
+
+    public InmuebleForm(String direccion, String tiposInmueble, String tipoNegocio, String valorAlquiler, String valorVenta) {
+        this.direccion = direccion;
+        this.tiposInmueble = tiposInmueble;
+        this.tipoNegocio = tipoNegocio;
+        this.valorAlquiler = valorAlquiler;
+        this.valorVenta = valorVenta;
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     }
 
     public String getDireccion() {
@@ -28,6 +57,7 @@ public class InmuebleForm {
         this.direccion = direccion;
     }
 
+<<<<<<< HEAD
     public String getCaracteristicas() {
         return caracteristicas;
     }
@@ -36,6 +66,8 @@ public class InmuebleForm {
         this.caracteristicas = caracteristicas;
     }
 
+=======
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     public String getTiposInmueble() {
         return tiposInmueble;
     }
@@ -52,6 +84,7 @@ public class InmuebleForm {
         this.tipoNegocio = tipoNegocio;
     }
 
+<<<<<<< HEAD
     public String getValor() {
         return valor;
     }
@@ -82,4 +115,23 @@ public class InmuebleForm {
         return sb.toString();
     }
 
+=======
+    public String getValorAlquiler() {
+        return valorAlquiler;
+    }
+
+    public void setValorAlquiler(String valorAlquiler) {
+        this.valorAlquiler = valorAlquiler;
+    }
+
+    public String getValorVenta() {
+        return valorVenta;
+    }
+
+    public void setValorVenta(String valorVenta) {
+        this.valorVenta = valorVenta;
+    }
+    
+    
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
 }

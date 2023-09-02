@@ -1,7 +1,21 @@
+<<<<<<< HEAD
 package com.inmueble.InmobiliariaSp.contenedores;
 
 public class UserForm {
 
+=======
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.inmueble.InmobiliariaSp.contenedores;
+
+/**
+ *
+ * @author 4rm4c
+ */
+public class UserForm {
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     private String nombre;
     private String apellido;
     private String email;
@@ -65,5 +79,10 @@ public class UserForm {
     public void setRol(String rol) {
         this.rol = rol;
     }
+<<<<<<< HEAD
 
+=======
+    
+    
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
 }

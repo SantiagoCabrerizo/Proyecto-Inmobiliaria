@@ -75,6 +75,7 @@ public class Inmueble {
 
     public TipoNegocio getTipoNegocio() {
         return tipoNegocio;
+<<<<<<< HEAD
     }
 
     public void setTipoNegocio(TipoNegocio tipoNegocio) {
@@ -103,3 +104,34 @@ public class Inmueble {
     }
 
 }
+=======
+    }
+
+    public void setTipoNegocio(TipoNegocio tipoNegocio) {
+        this.tipoNegocio = tipoNegocio;
+    }
+
+    public int getValorAlquiler() {
+        return valorAlquiler;
+    }
+
+    public void setValorAlquiler(int valorAlquiler) {
+        this.valorAlquiler = valorAlquiler;
+    }
+
+    public int getValorVenta() {
+        return valorVenta;
+    }
+
+    public void setValorVenta(int valorVenta) {
+        this.valorVenta = valorVenta;
+    }
+
+    public Inmueble(String direccion, TiposInmueble tiposInmueble) {
+        this.direccion = direccion;
+        this.tiposInmueble = tiposInmueble;
+    }
+    
+
+}
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513

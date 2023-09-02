@@ -41,23 +41,40 @@ public class UserServicio implements UserDetailsService {
         userRepositorio.save(user);
     }
 
+<<<<<<< HEAD
     public void validar(UserForm userForm) throws MiException {
         if (isEmailUnique(userForm.getEmail())) {
             throw new MiException("El email ingresado ya se encuentra registrado.");
         }
         if (isDniUnique(userForm.getDni())) {
+=======
+    
+    public void validar(UserForm userForm) throws MiException {
+        if (isEmailUnique(userForm.getEmail())){
+            throw new MiException("El email ingresado ya se encuentra registrado.");
+        }
+        if (isDniUnique(userForm.getDni())){
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
             throw new MiException("El dni ingresado ya se encuentra registrado.");
         }
         if (userForm.getNombre() == null || userForm.getNombre().isEmpty()) {
             throw new MiException("No se ha procesado el nombre");
         }
+<<<<<<< HEAD
         if (userForm.getApellido() == null || userForm.getApellido().isEmpty()) {
+=======
+        if (userForm.getApellido()== null || userForm.getApellido().isEmpty()) {
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
             throw new MiException("No se ha procesado el apellido");
         }
         if (userForm.getEmail() == null || userForm.getEmail().isEmpty()) {
             throw new MiException("El email no existe o es nullo");
         }
+<<<<<<< HEAD
         if (userForm.getPassword() == null || userForm.getPassword().isEmpty()) {
+=======
+        if (userForm.getPassword()== null || userForm.getPassword().isEmpty()) {
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
             throw new MiException("La contrasena es incorrecta");
         }
         if (userForm.getDni() == null || userForm.getDni().isEmpty()) {
@@ -88,7 +105,28 @@ public class UserServicio implements UserDetailsService {
         User existingUser = userRepositorio.findByDni(dni);
         return existingUser != null;
     }
+    
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User respuestaUserDni = userRepositorio.findByDni(username);
+        User respuestaUserEmail = userRepositorio.findByEmail(username);
+        Optional<User> respuestaUserId = userRepositorio.findById(username);
+        User user;
+        if(respuestaUserDni != null){
+            user = respuestaUserDni;
+        } else {
+            if(respuestaUserEmail != null){
+                user = respuestaUserEmail;
+            } else {
+                if(respuestaUserId.isPresent()){
+                    user = respuestaUserId.get();
+                } else {
+                throw new UsernameNotFoundException("Usuario no encontrado: " + username);
+                }
+            }
+        }
 
+<<<<<<< HEAD
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User respuestaUserDni = userRepositorio.findByDni(username);
@@ -109,6 +147,8 @@ public class UserServicio implements UserDetailsService {
             }
         }
 
+=======
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
         return UserDetailsImpl.build(user);
     }
 }

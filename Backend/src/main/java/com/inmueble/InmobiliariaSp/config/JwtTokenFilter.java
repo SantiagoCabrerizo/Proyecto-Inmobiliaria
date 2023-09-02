@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 package com.inmueble.InmobiliariaSp.config;
 
+=======
+
+package com.inmueble.InmobiliariaSp.config;
+
+
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import javax.servlet.FilterChain;
@@ -9,6 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.security.core.Authentication;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;

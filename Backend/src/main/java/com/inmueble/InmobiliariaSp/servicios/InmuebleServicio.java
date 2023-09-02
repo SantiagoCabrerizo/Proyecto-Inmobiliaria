@@ -34,15 +34,24 @@ public class InmuebleServicio {
         inmuebleAGuardar.setTiposInmueble(inmueble.getTiposInmueble());
         inmuebleRepositorio.save(inmueble);
     }
+<<<<<<< HEAD
 
     @Transactional
     public Inmueble crearInmuebleDesdeInmuebleForm(InmuebleForm inmuebleForm, String userId) throws MiException {
         System.out.println(inmuebleForm.toString());
+=======
+    
+    @Transactional
+    public void crearInmuebleDesdeInmuebleForm(InmuebleForm inmuebleForm, String userId) throws MiException {
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
         validar(inmuebleForm, userId);
         Inmueble inmueble = new Inmueble();
         inmueble.setDireccion(inmuebleForm.getDireccion());
         inmueble.setDueño(userRepositorio.getReferenceById(userId));
+<<<<<<< HEAD
         inmueble.setCaracteristicas(inmuebleForm.getCaracteristicas());
+=======
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
         TiposInmueble[] validarTiposInmueble = TiposInmueble.getValues();
         for (TiposInmueble tipo : validarTiposInmueble) {
             if (tipo.toString().equalsIgnoreCase(inmuebleForm.getTiposInmueble())) {
@@ -55,8 +64,14 @@ public class InmuebleServicio {
                 inmueble.setTipoNegocio(tipo);
             }
         }
+<<<<<<< HEAD
         inmueble.setValor(Integer.parseInt(inmuebleForm.getValor()));
         return inmuebleRepositorio.save(inmueble);
+=======
+        inmueble.setValorAlquiler(Integer.parseInt(inmuebleForm.getValorAlquiler()));
+        inmueble.setValorVenta(Integer.parseInt(inmuebleForm.getValorVenta()));
+        inmuebleRepositorio.save(inmueble);
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     }
 
     public List<Inmueble> listarInmuebles() {
@@ -64,7 +79,11 @@ public class InmuebleServicio {
         inmuebles = inmuebleRepositorio.findAll();
         return inmuebles;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     public List<Inmueble> listarInmueblesPorDueño(User dueño) {
         return inmuebleRepositorio.findByDueño(dueño);
     }
@@ -99,6 +118,10 @@ public class InmuebleServicio {
 //            inmuebleRepositorio.save(inmueble);
 //        }
 //    }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     public Inmueble getOne(String id) {
         return inmuebleRepositorio.getReferenceById(id);
     }
@@ -108,12 +131,17 @@ public class InmuebleServicio {
             throw new MiException("El id de dueño no puede ser nulo");
         } else {
             Optional<User> respuestaUser = userRepositorio.findById(idDueño);
+<<<<<<< HEAD
             if (!respuestaUser.isPresent()) {
+=======
+            if(!respuestaUser.isPresent()){
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
                 throw new MiException("El id de dueño es incorrecto");
             }
         }
         if (isDireccionUnique(inmueble.getDireccion())) {
             throw new MiException("La direccion ya se encuentra registrado.");
+<<<<<<< HEAD
         }
         if (inmueble.getDireccion() == null || inmueble.getDireccion().isEmpty()) {
             throw new MiException("No se ha procesado la direccion");
@@ -131,6 +159,64 @@ public class InmuebleServicio {
         if (validarTiposInmueble) {
             throw new MiException("El tipo de inmueble no es válido");
         }
+=======
+        }
+        if (inmueble.getDireccion()== null || inmueble.getDireccion().isEmpty()) {
+            throw new MiException("No se ha procesado la direccion");
+        }
+        boolean validarTiposInmueble = true;
+        TiposInmueble[] validarTInmueble = TiposInmueble.getValues();
+        for (TiposInmueble tipo : validarTInmueble) {
+            if (tipo.equals(inmueble.getTiposInmueble())) {
+                validarTiposInmueble = false;
+            }
+        }
+        if (validarTiposInmueble) {
+            throw new MiException("El tipo de inmueble no es válido");
+        }  
+    }
+    
+    private void validar(InmuebleForm inmuebleForm, String userId) throws MiException {
+        if (userId == null) {
+            throw new MiException("El id de dueño no puede ser nulo");
+        } else {
+            Optional<User> respuestaUser = userRepositorio.findById(userId);
+            if(!respuestaUser.isPresent()){
+                throw new MiException("El id de dueño es incorrecto");
+            }
+        }
+        if (isDireccionUnique(inmuebleForm.getDireccion())) {
+            throw new MiException("La direccion ya se encuentra registrado.");
+        }
+        if (inmuebleForm.getDireccion()== null || inmuebleForm.getDireccion().isEmpty()) {
+            throw new MiException("No se ha procesado la direccion");
+        }
+        boolean validarTiposInmueble = true;
+        TiposInmueble[] validarTInmueble = TiposInmueble.getValues();
+        for (TiposInmueble tipo : validarTInmueble) {
+            if (tipo.toString().equalsIgnoreCase(inmuebleForm.getTiposInmueble())) {
+                validarTiposInmueble = false;
+            }
+        }
+        if (validarTiposInmueble) {
+            throw new MiException("El tipo de inmueble no es válido");
+        }  
+        boolean validarTipoNegocio = true;
+        TipoNegocio[] validarTNegocio = TipoNegocio.getValues();
+        for (TipoNegocio tipo : validarTNegocio) {
+            if (tipo.toString().equalsIgnoreCase(inmuebleForm.getTipoNegocio())) {
+                validarTipoNegocio = false;
+            }
+        }
+        if (validarTipoNegocio) {
+            throw new MiException("El tipo de inmueble no es válido");
+        }  
+    }
+    
+    public boolean isDireccionUnique(String direccion) {
+        Inmueble existingInmueble = inmuebleRepositorio.findByDireccion(direccion);
+        return existingInmueble != null;
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     }
 
     private void validar(InmuebleForm inmuebleForm, String userId) throws MiException {

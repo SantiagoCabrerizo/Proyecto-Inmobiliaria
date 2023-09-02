@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
 package com.inmueble.InmobiliariaSp.config;
 
 import com.inmueble.InmobiliariaSp.entidad.User;
@@ -13,9 +20,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class UserDetailsImpl implements UserDetails {
+<<<<<<< HEAD
 
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsImpl.class);
     private String id;
+=======
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsImpl.class);
+     private String id;
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
@@ -65,12 +77,17 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return username;
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
     public String getId() {
         return id;
     }
 
     @Override
+<<<<<<< HEAD
     public boolean isAccountNonExpired() {
         return true; // Las cuentas nunca expiran
     }
@@ -90,3 +107,24 @@ public class UserDetailsImpl implements UserDetails {
         return true; // Las cuentas siempre están habilitadas
     }
 }
+=======
+public boolean isAccountNonExpired() {
+    return true; // Las cuentas nunca expiran
+}
+
+@Override
+public boolean isAccountNonLocked() {
+    return true; // Las cuentas nunca están bloqueadas
+}
+
+@Override
+public boolean isCredentialsNonExpired() {
+    return true; // Las credenciales nunca expiran
+}
+
+@Override
+public boolean isEnabled() {
+    return true; // Las cuentas siempre están habilitadas
+}
+}
+>>>>>>> 514df8c79935f60ae60c73f34c347143a8b15513
