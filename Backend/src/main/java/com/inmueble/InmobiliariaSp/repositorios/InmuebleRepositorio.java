@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -20,6 +21,14 @@ public interface InmuebleRepositorio extends JpaRepository<Inmueble, String> {
     @Query("SELECT i, MAX(im.contenido) AS primeraImagenContenido "
             + "FROM Inmueble i "
             + "LEFT JOIN Imagen im ON i.id = im.inmueble.id "
+            + "WHERE i.inquilino IS NULL "
             + "GROUP BY i.id")
-    Page<Object[]> getInmueblesWithOffset(Pageable pageable);
+    Page<Object[]> getInmueblesDisponiblesWithOffset(Pageable pageable);
+    
+    @Query("SELECT i, MAX(im.contenido) AS primeraImagenContenido "
+        + "FROM Inmueble i "
+        + "LEFT JOIN Imagen im ON i.id = im.inmueble.id "
+        + "WHERE i.inquilino IS NULL AND i.dueño != :parametroDueño " // Agregar las condiciones de filtro
+        + "GROUP BY i.id")
+    Page<Object[]> getInmueblesDisponiblesWithOffsetSinDueño(@Param("parametroDueño") User parametroDueño, Pageable pageable);
 }

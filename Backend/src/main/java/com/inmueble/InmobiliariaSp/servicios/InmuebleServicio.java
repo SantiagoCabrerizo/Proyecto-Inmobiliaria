@@ -74,9 +74,9 @@ public class InmuebleServicio {
         return inmuebleRepositorio.findByDueño(dueño);
     }
     
-    public Page<Object[]> getInmueblesWithOffset(int offset) {
+    public Page<Object[]> getInmueblesDisponiblesWithOffset(int offset) {
         Pageable pageable = PageRequest.of(offset, 6); // 6 inmuebles por página
-        return inmuebleRepositorio.getInmueblesWithOffset(pageable);
+        return inmuebleRepositorio.getInmueblesDisponiblesWithOffset(pageable);
     }
 //    @Transactional
 //    public void modificarInmueble(String id, String direccion, String idDueño, String idInquilino, String tiposInmueble) throws MiException {

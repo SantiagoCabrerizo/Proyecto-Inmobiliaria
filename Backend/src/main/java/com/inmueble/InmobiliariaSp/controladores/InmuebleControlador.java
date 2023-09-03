@@ -100,7 +100,7 @@ public class InmuebleControlador {
     
     @GetMapping("/listar")
     public Page<Object[]> getInmueblesWithOffset(@RequestParam int offset) {
-        return inmuebleServicio.getInmueblesWithOffset(offset);
+        return inmuebleServicio.getInmueblesDisponiblesWithOffset(offset);
     }
 
 }
