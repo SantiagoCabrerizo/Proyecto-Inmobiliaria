@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/user/")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UserControlador {
-    
+
     @Autowired
     private UserRepositorio userRepositorio;
     @Autowired
@@ -64,5 +64,5 @@ public class UserControlador {
             return new ResponseEntity<>("Error al eliminar el producto", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
 }
