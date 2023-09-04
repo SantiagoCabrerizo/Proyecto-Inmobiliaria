@@ -21,6 +21,7 @@ public class Inmueble {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String direccion;
+    private String caracteristicas;
     @ManyToOne
     private User dueño;
     @OneToOne
@@ -29,8 +30,8 @@ public class Inmueble {
     private TiposInmueble tiposInmueble;
     @Enumerated(EnumType.STRING)
     private TipoNegocio tipoNegocio;
-    private int valorAlquiler;
-    private int valorVenta;
+    private int valor;
+
     
             
     public Inmueble() {
@@ -84,25 +85,25 @@ public class Inmueble {
         this.tipoNegocio = tipoNegocio;
     }
 
-    public int getValorAlquiler() {
-        return valorAlquiler;
+    public int getValor() {
+        return valor;
     }
 
-    public void setValorAlquiler(int valorAlquiler) {
-        this.valorAlquiler = valorAlquiler;
-    }
-
-    public int getValorVenta() {
-        return valorVenta;
-    }
-
-    public void setValorVenta(int valorVenta) {
-        this.valorVenta = valorVenta;
+    public void setValor(int valor) {
+        this.valor = valor;
     }
 
     public Inmueble(String direccion, TiposInmueble tiposInmueble) {
         this.direccion = direccion;
         this.tiposInmueble = tiposInmueble;
+    }
+
+    public String getCaracteristicas() {
+        return caracteristicas;
+    }
+
+    public void setCaracteristicas(String caracteristicas) {
+        this.caracteristicas = caracteristicas;
     }
     
 

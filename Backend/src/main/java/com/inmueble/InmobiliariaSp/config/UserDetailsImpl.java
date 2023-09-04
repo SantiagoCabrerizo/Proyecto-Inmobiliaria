@@ -11,25 +11,37 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class UserDetailsImpl implements UserDetails {
-
-    private String id;
+    private static final Logger logger = LoggerFactory.getLogger(UserDetailsImpl.class);
+     private String id;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String id, String username, String password, Rol rol) {
+    public UserDetailsImpl(String id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_" + rol.name()));
+        this.authorities = authorities;
     }
-    
-    private Collection<? extends GrantedAuthority> buildAuthorities(Rol rol) {
+
+    public static UserDetailsImpl build(User user) {
+        Collection<? extends GrantedAuthority> authorities = buildAuthorities(user.getRol());
+        return new UserDetailsImpl(
+                user.getId(),
+                user.getEmail(),
+                user.getPassword(),
+                authorities
+        );
+    }
+
+    private static Collection<? extends GrantedAuthority> buildAuthorities(Rol rol) {
+        logger.debug("Building authorities for role: " + rol.name());
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + rol.name()));
 
@@ -40,15 +52,6 @@ public class UserDetailsImpl implements UserDetails {
         }
 
         return authorities;
-    }
-
-    public static UserDetailsImpl build(User user) {
-        return new UserDetailsImpl(
-                user.getId(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getRol()
-        );
     }
 
     @Override

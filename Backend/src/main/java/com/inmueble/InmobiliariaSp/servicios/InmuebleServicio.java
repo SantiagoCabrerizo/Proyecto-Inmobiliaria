@@ -38,11 +38,13 @@ public class InmuebleServicio {
     }
     
     @Transactional
-    public void crearInmuebleDesdeInmuebleForm(InmuebleForm inmuebleForm, String userId) throws MiException {
+    public Inmueble crearInmuebleDesdeInmuebleForm(InmuebleForm inmuebleForm, String userId) throws MiException {
+        System.out.println(inmuebleForm.toString());
         validar(inmuebleForm, userId);
         Inmueble inmueble = new Inmueble();
         inmueble.setDireccion(inmuebleForm.getDireccion());
         inmueble.setDueño(userRepositorio.getReferenceById(userId));
+        inmueble.setCaracteristicas(inmuebleForm.getCaracteristicas());
         TiposInmueble[] validarTiposInmueble = TiposInmueble.getValues();
         for (TiposInmueble tipo : validarTiposInmueble) {
             if (tipo.toString().equalsIgnoreCase(inmuebleForm.getTiposInmueble())) {
@@ -55,9 +57,8 @@ public class InmuebleServicio {
                 inmueble.setTipoNegocio(tipo);
             }
         }
-        inmueble.setValorAlquiler(Integer.parseInt(inmuebleForm.getValorAlquiler()));
-        inmueble.setValorVenta(Integer.parseInt(inmuebleForm.getValorVenta()));
-        inmuebleRepositorio.save(inmueble);
+        inmueble.setValor(Integer.parseInt(inmuebleForm.getValor()));
+        return inmuebleRepositorio.save(inmueble);
     }
 
     public List<Inmueble> listarInmuebles() {
@@ -120,6 +121,9 @@ public class InmuebleServicio {
         if (inmueble.getDireccion()== null || inmueble.getDireccion().isEmpty()) {
             throw new MiException("No se ha procesado la direccion");
         }
+        if (inmueble.getCaracteristicas()== null || inmueble.getCaracteristicas().isEmpty()) {
+            throw new MiException("No se han procesado las caracteristicas");
+        }
         boolean validarTiposInmueble = true;
         TiposInmueble[] validarTInmueble = TiposInmueble.getValues();
         for (TiposInmueble tipo : validarTInmueble) {
@@ -147,9 +151,13 @@ public class InmuebleServicio {
         if (inmuebleForm.getDireccion()== null || inmuebleForm.getDireccion().isEmpty()) {
             throw new MiException("No se ha procesado la direccion");
         }
+        if (inmuebleForm.getCaracteristicas()== null || inmuebleForm.getCaracteristicas().isEmpty()) {
+            throw new MiException("No se han procesado las caracteristicas");
+        }
         boolean validarTiposInmueble = true;
         TiposInmueble[] validarTInmueble = TiposInmueble.getValues();
         for (TiposInmueble tipo : validarTInmueble) {
+            System.out.println(tipo.toString()+" COMPARADO CON "+inmuebleForm.getTiposInmueble());
             if (tipo.toString().equalsIgnoreCase(inmuebleForm.getTiposInmueble())) {
                 validarTiposInmueble = false;
             }
@@ -166,7 +174,10 @@ public class InmuebleServicio {
         }
         if (validarTipoNegocio) {
             throw new MiException("El tipo de inmueble no es válido");
-        }  
+        }
+        if (inmuebleForm.getCaracteristicas()== null || inmuebleForm.getCaracteristicas().isEmpty()) {
+            throw new MiException("No se ha procesado la direccion");
+        }
     }
     
     public boolean isDireccionUnique(String direccion) {
