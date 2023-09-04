@@ -25,9 +25,15 @@ export const LogIn = () => {
     try {
       const response = await LoginService.loginUsers(data)
       const token = response.data.token
+      
+      const decodedToken = JSON.parse(atob(token.split('.')[1]))
+      const rol = decodedToken.roles;
 
+      
       localStorage.setItem('token', token);
-      navigate("/logueado")
+      localStorage.setItem('roles', rol)
+      
+      navigate("/home")
       
       
     } catch (err) {
