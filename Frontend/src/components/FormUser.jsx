@@ -7,7 +7,6 @@ import LoginService from '../services/LoginService';
 
 export const FormUser = () => {
 
-
   const date = new Date().getFullYear()
   const navigate = useNavigate()
   const {
@@ -29,7 +28,7 @@ export const FormUser = () => {
       const token = response.data.token
       localStorage.setItem('token', token)
 
-      navigate("/logueado")
+      navigate("/home-client")
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setError(err.response.data);

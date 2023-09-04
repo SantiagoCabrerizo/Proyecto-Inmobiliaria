@@ -12,8 +12,10 @@ export const Header = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbar-toggler">
-
-            <img src="public/logo_header.jpeg" width={150} alt="Logo de la página web" />
+            
+            <Link to="/" className='navbar-brand'>
+              <img src="public/logo_header.jpeg" width={150} alt="Logo de la página web" />
+            </Link>
 
             <ul className="navbar-nav d-flex align-items-center" >
 
