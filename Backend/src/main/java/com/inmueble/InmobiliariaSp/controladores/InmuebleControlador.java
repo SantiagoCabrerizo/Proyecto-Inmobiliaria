@@ -99,8 +99,21 @@ public class InmuebleControlador {
     }
     
     @GetMapping("/listar")
-    public Page<Object[]> getInmueblesWithOffset(@RequestParam int offset) {
-        return inmuebleServicio.getInmueblesDisponiblesWithOffset(offset);
+    public Page<Object[]> getInmueblesWithOffset(@RequestParam String pagina, @RequestParam String cantidad) {
+        return inmuebleServicio.getInmueblesDisponiblesWithOffset(pagina, cantidad);
     }
-
+    
+    @PreAuthorize("hasRole('ROLE_ENTE')")
+    @GetMapping("/listarEnte")
+    public Page<Object[]> getInmueblesWithOffsetSinDueño(@RequestParam String pagina, @RequestParam String cantidad, HttpServletRequest request) throws MiException {
+        String token = jwtTokenProvider.resolveToken(request);
+        String userId = null;
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            userId = jwtTokenProvider.getUserIdFromJWT(token);
+            String userRol = jwtTokenProvider.getRolesFromJWT(token).toString();  // Obtener los roles del token
+            System.out.println("UserId:"+userId);
+            System.out.println("UserRol:"+userRol);
+        }
+        return inmuebleServicio.getInmueblesDisponiblesWithOffsetSinDueño(pagina, cantidad, userId);
+    }
 }

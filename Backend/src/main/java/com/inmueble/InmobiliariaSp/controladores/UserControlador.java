@@ -1,11 +1,13 @@
 package com.inmueble.InmobiliariaSp.controladores;
 
+import com.inmueble.InmobiliariaSp.config.JwtTokenProvider;
 import com.inmueble.InmobiliariaSp.contenedores.UserForm;
 import com.inmueble.InmobiliariaSp.entidad.User;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
 import com.inmueble.InmobiliariaSp.servicios.UserServicio;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +31,8 @@ public class UserControlador {
     private UserRepositorio userRepositorio;
     @Autowired
     private UserServicio userServicio;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     //Read Users
     @GetMapping("/usuarios")
@@ -49,6 +54,7 @@ public class UserControlador {
 
     //Get User By Id
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public User getById(@PathVariable String id) {
         return userRepositorio.getReferenceById(id);
     }
@@ -56,13 +62,32 @@ public class UserControlador {
     //Delete Users
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<String> deleteUser(@PathVariable String id) {
+    public ResponseEntity<String> deleteUser(@PathVariable String id) throws MiException {
         try {
-            userRepositorio.deleteById(id);
-            return new ResponseEntity<>("Producto eliminado exitosamente", HttpStatus.OK);
+            userServicio.deleteById(id);
+            return new ResponseEntity<>("Usuario eliminado exitosamente", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Error al eliminar el producto", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error al eliminar el usuario", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ENTE')")
+    public ResponseEntity<String> modificarUser (@RequestBody UserForm userForm, HttpServletRequest request) throws MiException{
+        String token = jwtTokenProvider.resolveToken(request);
+        String userId = null;
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            userId = jwtTokenProvider.getUserIdFromJWT(token);
+            String userRol = jwtTokenProvider.getRolesFromJWT(token).toString();  // Obtener los roles del token
+            System.out.println("UserId:"+userId);
+            System.out.println("UserRol:"+userRol);
+        }
+        try {
+            userServicio.modificarUserComoClient(userForm, userId);
+            return new ResponseEntity<>("Usuario modificado exitosamente", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al modificar el usuario", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
 }
