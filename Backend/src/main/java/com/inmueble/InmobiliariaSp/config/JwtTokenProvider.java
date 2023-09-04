@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.inmueble.InmobiliariaSp.config;
 
 import io.jsonwebtoken.*;
@@ -92,12 +88,12 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-    String bearerToken = request.getHeader("Authorization");
-    if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-        return bearerToken.substring(7);
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
-    return null;
-}
 
     public Authentication getAuthentication(String token) {
         String userId = getUserIdFromJWT(token);

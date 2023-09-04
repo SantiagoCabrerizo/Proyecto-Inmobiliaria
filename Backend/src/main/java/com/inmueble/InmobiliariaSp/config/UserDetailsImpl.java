@@ -17,8 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class UserDetailsImpl implements UserDetails {
+
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsImpl.class);
-     private String id;
+    private String id;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
@@ -68,28 +69,28 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return username;
     }
-    
+
     public String getId() {
         return id;
     }
 
     @Override
-public boolean isAccountNonExpired() {
-    return true; // Las cuentas nunca expiran
-}
+    public boolean isAccountNonExpired() {
+        return true; // Las cuentas nunca expiran
+    }
 
-@Override
-public boolean isAccountNonLocked() {
-    return true; // Las cuentas nunca están bloqueadas
-}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // Las cuentas nunca están bloqueadas
+    }
 
-@Override
-public boolean isCredentialsNonExpired() {
-    return true; // Las credenciales nunca expiran
-}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // Las credenciales nunca expiran
+    }
 
-@Override
-public boolean isEnabled() {
-    return true; // Las cuentas siempre están habilitadas
-}
+    @Override
+    public boolean isEnabled() {
+        return true; // Las cuentas siempre están habilitadas
+    }
 }

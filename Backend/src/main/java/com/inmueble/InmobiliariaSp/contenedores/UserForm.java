@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.inmueble.InmobiliariaSp.contenedores;
 
-/**
- *
- * @author 4rm4c
- */
 public class UserForm {
+
     private String nombre;
     private String apellido;
     private String email;
@@ -72,6 +65,5 @@ public class UserForm {
     public void setRol(String rol) {
         this.rol = rol;
     }
-    
-    
+
 }

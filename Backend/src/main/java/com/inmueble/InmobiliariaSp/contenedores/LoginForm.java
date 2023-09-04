@@ -1,14 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.inmueble.InmobiliariaSp.contenedores;
 
-/**
- *
- * @author 4rm4c
- */
 public class LoginForm {
+
     private String username;
     private String password;
 
@@ -32,5 +25,5 @@ public class LoginForm {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
 }

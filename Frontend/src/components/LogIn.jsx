@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import LoginService from "../services/LoginService";
 
@@ -15,19 +15,33 @@ export const LogIn = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    watch
   } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    LoginService.loginUsers(data).then(navigate("/"));
-  });
+  const [error, setError] = useState("")
+
+  const onSubmit = async (data) => { 
+
+    try {
+      const response = await LoginService.loginUsers(data)
+      const token = response.data.token
+
+      localStorage.setItem('token', token);
+      navigate("/logueado")
+      
+      
+    } catch (err) {
+      if (err.response && err.response.status === 401){
+        setError("Usuario no encontrado")
+      }
+    }
+  }
 
   return (
     <div className="container mt-4">
       <div className="row justify-content-center text-center">
         <div className="col-md-4">
-          <form onSubmit={onSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <p className="h3 mb-3 fw-normal">Iniciar sesión</p>
 
             <div className="form-floating mb-3">
@@ -74,6 +88,8 @@ export const LogIn = () => {
                 </div>
               )}
               <label htmlFor="floatingPassword">Contraseña</label>
+
+              {error && <div className="alert alert-danger mt-3 py-2">{error}</div>}
             </div>
 
             <div className="d-grid gap-2 mt-4">
@@ -90,7 +106,6 @@ export const LogIn = () => {
             <p className="mb-3 fs-6 fw-normal">
               ¿No tienes una cuenta?
               <span>
-                {" "}
                 <Link
                   to={"/registro"}
                   className="link-underline link-underline-opacity-0"
