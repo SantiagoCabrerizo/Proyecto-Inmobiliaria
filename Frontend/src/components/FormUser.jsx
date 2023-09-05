@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import UserService from '../services/UserService';
+import { AxiosError } from 'axios';
+import LoginService from '../services/LoginService';
 
 export const FormUser = () => {
-
 
   const date = new Date().getFullYear()
   const navigate = useNavigate()
@@ -12,16 +13,27 @@ export const FormUser = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    watch
   } = useForm();
 
-  const onSubmit = (data) => {
+  const [error, setError] = useState("")
+
+  const onSubmit = async (data) => {
+
     const { confirmarPassword, ...formData } = data;
     console.log(formData)
-    UserService.createUsers(formData)
-      .then(
-        navigate("/usuarios")
-      )
+
+    try {
+      const response = await UserService.createUsers(formData)
+      const token = response.data.token
+      localStorage.setItem('token', token)
+
+      navigate("/home-client")
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        setError(err.response.data);
+      }
+    }
   }
 
   return (
@@ -96,6 +108,7 @@ export const FormUser = () => {
                 })}
               />
               {errors.email && <div className='alert alert-danger mt-2 py-2'>{errors.email.message}</div>}
+              {error && <div className='alert alert-danger mt-2 py-2'>{error}</div>}
               <label htmlFor="floatingInputEmail">Email</label>
             </div>
 
@@ -149,10 +162,9 @@ export const FormUser = () => {
 
             <p className="mb-3 fs-6 fw-normal">¿Ya tienes una cuenta?
               <span> <Link to={"/ingresar"} className='link-underline link-underline-opacity-0'>Inicia sesión</Link></span></p>
-
-
             <p className="mt-4 mb-4 text-body-secondary">&copy; {date}</p>
           </form>
+
         </div>
       </div>
 
