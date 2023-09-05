@@ -12,6 +12,7 @@ import { TestUserDetails } from "./components/TestUserDetails";
 import { FormInmueble } from "./components/FormInmueble";
 import { useFormState } from "react-hook-form";
 import { HomeCliente } from "./components/HomeCliente";
+import { HomePropietario } from "./components/HomePropietario";
 import { CardsAlquileres } from "./components/CardsAlquileres";
 
 /* 
