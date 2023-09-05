@@ -9,7 +9,7 @@ export const TestUserDetails = () => {
     const navigate = useNavigate()
 
     useEffect(()=>{
-        UserService.getById(id)
+        UserService.getById(id, localStorage.getItem('token'))
             .then(
                 res => setUser(res.data)
             )
@@ -29,6 +29,7 @@ export const TestUserDetails = () => {
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
+                        <th>Apellido</th>
                         <th>Email</th>
                         <th>DNI</th>
                     </tr>
@@ -37,6 +38,7 @@ export const TestUserDetails = () => {
                     <tr>
                         <td>{user.id}</td>
                         <td>{user.nombre}</td>
+                        <td>{user.apellido}</td>
                         <td>{user.email}</td>
                         <td>{user.dni}</td>
                         <td><button className='btn btn-danger' onClick={()=>deleteUser(id)}>Eliminar</button></td>

@@ -4,16 +4,26 @@ const URL = "http://localhost:8080/api/user/"
 
 class UserService {
 
-    getUsers() {
-        return axios.get(URL + "usuarios")
+    getUsers(token) {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        return axios.get(URL + "usuarios", config)
     }
 
     createUsers(user) {
         return axios.post(URL + "registro", user)
     }
 
-    getById(userId) {
-        return axios.get(URL + userId)
+    getById(userId, token) {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        return axios.get(URL + userId, config)
     }
 
     deleteUser(userId) {

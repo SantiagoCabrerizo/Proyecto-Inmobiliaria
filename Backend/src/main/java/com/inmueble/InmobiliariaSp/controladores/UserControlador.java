@@ -55,8 +55,17 @@ public class UserControlador {
     //Get User By Id
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public User getById(@PathVariable String id) {
-        return userRepositorio.getReferenceById(id);
+    public ResponseEntity<UserForm> getById(@PathVariable String id) {
+        User usuario = userRepositorio.getReferenceById(id);
+        UserForm userForm = new UserForm();
+        userForm.setId(usuario.getId());
+        userForm.setNombre(usuario.getNombre());
+        userForm.setApellido(usuario.getApellido());
+        userForm.setEmail(usuario.getEmail());
+        userForm.setDni(usuario.getDni());
+
+        
+        return ResponseEntity.ok(userForm);
     }
 
     //Delete Users

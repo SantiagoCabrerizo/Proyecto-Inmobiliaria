@@ -7,7 +7,7 @@ export const TestUser = () => {
     const [user, setUser] = useState([]);
 
     useEffect(() => {
-        UserService.getUsers()
+        UserService.getUsers(localStorage.getItem('token'))
             .then(res => setUser(res.data))
     }, [])
 
@@ -17,7 +17,9 @@ export const TestUser = () => {
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Apellido</th>
                         <th>Email</th>
+                        <th>Dni</th>
                         <th>Rol</th>
                     </tr>
                 </thead>
@@ -25,7 +27,9 @@ export const TestUser = () => {
                     {user.map(user =>
                         <tr key={user.id}>
                             <td>{user.nombre}</td>
+                            <td>{user.apellido}</td>
                             <td>{user.email}</td>
+                            <td>{user.dni}</td>
                             <td>{user.rol}</td>
                             <td><Link to={`/usuarios/${user.id}`}>Detalles</Link></td>
                         </tr>
