@@ -20,12 +20,11 @@ export const FormInmueble = () => {
         formData.append("tipoNegocio", data.tipo_neg);
         formData.append("tiposInmueble", data.tiposInmueble);
         formData.append("valor", data.valor);
-        if (data.foto[0]) {
-            formData.append("foto", data.foto[0]);
-        }
+        formData.append("foto", data.inputImagen[0]);
         console.log(formData);
+        console.log(data);
         try {
-            InmuebleService.ingresarInmueble(formData);
+            InmuebleService.ingresarInmueble(formData, localStorage.getItem('token'));
             // Realizar las acciones necesarias después de la carga exitosa
         } catch (error) {
             // Manejar el error
@@ -181,7 +180,7 @@ export const FormInmueble = () => {
                                 id="inputImagen"
                                 aria-describedby="inputGroupFileAddon04"
                                 aria-label="Upload"
-                                {...register("foto")}
+                                {...register("inputImagen")}
                             />
 
                             <button
@@ -205,12 +204,5 @@ export const FormInmueble = () => {
                 </div>
             </div>
         </div>
-<<<<<<< Updated upstream
-      </div>
-    </div>
-  );
-};
-=======
     );
 };
->>>>>>> Stashed changes

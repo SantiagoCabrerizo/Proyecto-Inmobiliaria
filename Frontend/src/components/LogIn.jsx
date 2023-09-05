@@ -20,10 +20,14 @@ export const LogIn = () => {
 
   const [error, setError] = useState("")
 
-  const onSubmit = async (data) => { 
+    const onSubmit = async (data) => {
+        const formData = new FormData();
+        formData.append("username", data.username);
+        formData.append("password", data.password);
 
-    try {
-      const response = await LoginService.loginUsers(data)
+
+        try {
+        const response = await LoginService.loginUsers(formData)
       const token = response.data.token
       
       const decodedToken = JSON.parse(atob(token.split('.')[1]))
