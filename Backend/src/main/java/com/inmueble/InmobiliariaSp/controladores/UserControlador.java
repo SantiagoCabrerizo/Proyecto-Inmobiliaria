@@ -54,7 +54,7 @@ public class UserControlador {
 
     //Get User By Id
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ENTE') or hasRole('CLIENT')")
     public ResponseEntity<UserForm> getById(@PathVariable String id) {
         User usuario = userRepositorio.getReferenceById(id);
         UserForm userForm = new UserForm();
@@ -81,7 +81,7 @@ public class UserControlador {
     }
     
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('CLIENT') or hasRole('ENTE')")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ENTE') ")
     public ResponseEntity<String> modificarUser (@RequestBody UserForm userForm, HttpServletRequest request) throws MiException{
         String token = jwtTokenProvider.resolveToken(request);
         String userId = null;

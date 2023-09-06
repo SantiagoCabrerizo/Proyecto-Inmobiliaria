@@ -9,6 +9,9 @@ class InmuebleService {
                 Authorization: `Bearer ${token}` }
         };
         return axios.post(URL + "registroInmueble", inmuebleForm, config);
-  }
+    }
+    getInmuebleAll() {
+        return axios.get(URL + "listar");
+    }
 }
 export default new InmuebleService();

@@ -43,7 +43,7 @@ public class InmuebleControlador {
     private JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/inmuebles")
-    public List<Inmueble> listarUsuarios() {
+    public List<Inmueble> listarInmuebles() {
         return inmuebleRepositorio.findAll();
     }
 
@@ -90,9 +90,15 @@ public class InmuebleControlador {
     }
     
     @GetMapping("/listar")
-    public Page<Object[]> getInmueblesWithOffset(@RequestParam String pagina, @RequestParam String cantidad) {
-        return inmuebleServicio.getInmueblesDisponiblesWithOffset(pagina, cantidad);
+    public Page<Object[]> getInmueblesWithOffset() {
+        return inmuebleServicio.getInmueblesDisponiblesWithOffset("0" , "6");
     }
+    
+//    @GetMapping("/listar")
+//    @PreAuthorize("hasRole('ROLE_ENTE')")
+//    public List<Inmueble> getInmueblesAll() {
+//        return inmuebleRepositorio.findAll();
+//    }
     
     @PreAuthorize("hasRole('ROLE_ENTE')")
     @GetMapping("/listarEnte")
