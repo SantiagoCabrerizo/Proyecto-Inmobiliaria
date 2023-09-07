@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class InmuebleForm {
     private String id;
     private String direccion;
+    private String dueño;
+    private String inquilino;
     private String caracteristicas;
     private String tiposInmueble;
     private String tipoNegocio;
@@ -87,6 +89,22 @@ public class InmuebleForm {
 
     public void setFoto(MultipartFile foto) {
         this.foto = foto;
+    }
+    
+     public String getDueño() {
+        return dueño;
+    }
+
+    public void setDueño(String dueño) {
+        this.dueño = dueño;
+    }
+
+    public String getInquilino() {
+        return inquilino;
+    }
+
+    public void setInquilino(String inquilino) {
+        this.inquilino = inquilino;
     }
 
     @Override

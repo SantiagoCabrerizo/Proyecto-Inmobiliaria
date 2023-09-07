@@ -1,5 +1,6 @@
 package com.inmueble.InmobiliariaSp.entidad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.inmueble.InmobiliariaSp.enumeraciones.Rol;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,6 +20,7 @@ public class User {
     private String nombre;
     private String apellido;
     private String email;
+    @JsonIgnore
     private String password;
     private String dni;
     @Enumerated(EnumType.STRING)
