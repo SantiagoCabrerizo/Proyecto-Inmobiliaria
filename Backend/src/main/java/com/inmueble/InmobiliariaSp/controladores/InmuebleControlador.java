@@ -3,10 +3,13 @@ package com.inmueble.InmobiliariaSp.controladores;
 import com.inmueble.InmobiliariaSp.config.JwtTokenProvider;
 import com.inmueble.InmobiliariaSp.contenedores.InmuebleForm;
 import com.inmueble.InmobiliariaSp.entidad.Inmueble;
+import com.inmueble.InmobiliariaSp.entidad.User;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.InmuebleRepositorio;
+import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
 import com.inmueble.InmobiliariaSp.servicios.ImagenServicio;
 import com.inmueble.InmobiliariaSp.servicios.InmuebleServicio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,9 @@ public class InmuebleControlador {
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private UserRepositorio userRepositorio;
 
     @GetMapping("/inmuebles")
     public List<Inmueble> listarInmuebles() {
@@ -92,11 +98,72 @@ public class InmuebleControlador {
         return inmuebleServicio.getInmueblesDisponiblesWithOffset(pagina, cantidad);
     }
 
-    @GetMapping("/listars")
-    @PreAuthorize("hasRole('CLIENT') or hasRole('ENTE')")
-    public List<Inmueble> getInmueblesAll() {
-        return inmuebleRepositorio.findAll();
+    @PreAuthorize("hasRole('ROLE_ENTE')")
+    @GetMapping("/listarInmueblesEnte")
+    public List<InmuebleForm> getInmueblesByDueño(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        String userId = null;
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            userId = jwtTokenProvider.getUserIdFromJWT(token);
+            String userRol = jwtTokenProvider.getRolesFromJWT(token).toString();  // Obtener los roles del token
+            System.out.println("UserId:" + userId);
+            System.out.println("UserRol:" + userRol);
+        }
+        User user = userRepositorio.getReferenceById(userId);
+        List<Inmueble> listaInmuebles = inmuebleRepositorio.findByDueño(user);
+        List<InmuebleForm> listaFormulario = new ArrayList();
+        for (Inmueble listaInmueble : listaInmuebles) {
+            InmuebleForm inmuebleTest = new InmuebleForm();
+            inmuebleTest.setId(listaInmueble.getId());
+            inmuebleTest.setDireccion(listaInmueble.getDireccion());
+            inmuebleTest.setDueño(listaInmueble.getDueño().getId());
+            if (listaInmueble.getInquilino() != null) {
+                inmuebleTest.setInquilino(listaInmueble.getInquilino().getNombre() + " " + listaInmueble.getInquilino().getApellido());
+            } else {
+                inmuebleTest.setInquilino("Sin inquilino");
+            }
+            inmuebleTest.setCaracteristicas(listaInmueble.getCaracteristicas());
+            inmuebleTest.setTiposInmueble(listaInmueble.getTiposInmueble().toString());
+            inmuebleTest.setTipoNegocio(listaInmueble.getTipoNegocio().toString());
+            inmuebleTest.setValor(listaInmueble.getValor() + "");
+            listaFormulario.add(inmuebleTest);
+        }
+        return listaFormulario;
     }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @GetMapping("/listarInmueblesClient")
+    public List<InmuebleForm> getInmueblesByInquilino(HttpServletRequest request) {
+        String token = jwtTokenProvider.resolveToken(request);
+        String userId = null;
+        if (token != null && jwtTokenProvider.validateToken(token)) {
+            userId = jwtTokenProvider.getUserIdFromJWT(token);
+            String userRol = jwtTokenProvider.getRolesFromJWT(token).toString();  // Obtener los roles del token
+            System.out.println("UserId:" + userId);
+            System.out.println("UserRol:" + userRol);
+        }
+        User user = userRepositorio.getReferenceById(userId);
+        List<Inmueble> listaInmuebles = inmuebleRepositorio.findByInquilino(user);
+        List<InmuebleForm> listaFormulario = new ArrayList();
+        for (Inmueble listaInmueble : listaInmuebles) {
+            InmuebleForm inmuebleTest = new InmuebleForm();
+            inmuebleTest.setId(listaInmueble.getId());
+            inmuebleTest.setDireccion(listaInmueble.getDireccion());
+            inmuebleTest.setDueño(listaInmueble.getDueño().getNombre() + " " + listaInmueble.getDueño().getApellido());
+            inmuebleTest.setInquilino(listaInmueble.getInquilino().getId());
+            inmuebleTest.setCaracteristicas(listaInmueble.getCaracteristicas());
+            inmuebleTest.setTiposInmueble(listaInmueble.getTiposInmueble().toString());
+            inmuebleTest.setTipoNegocio(listaInmueble.getTipoNegocio().toString());
+            inmuebleTest.setValor(listaInmueble.getValor() + "");
+            listaFormulario.add(inmuebleTest);
+        }
+        return listaFormulario;
+    }
+//    @GetMapping("/listar")
+//    @PreAuthorize("hasRole('ROLE_ENTE')")
+//    public List<Inmueble> getInmueblesAll() {
+//        return inmuebleRepositorio.findAll();
+//    }
 
     @PreAuthorize("hasRole('ROLE_ENTE')")
     @GetMapping("/listarEnte")

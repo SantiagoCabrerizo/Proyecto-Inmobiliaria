@@ -34,7 +34,7 @@ export const HomeEnte = () => {
             <div className="h-100 p-5 bg-body-tertiary border rounded-3">
               <h2>Ver Propiedades</h2>
               <p>Mira y controla tu lista de propiedades.</p>
-              <Link to={"/home"} className="fs-2 mb-3 text-dark">
+              <Link to={"/propiedades"} className="fs-2 mb-3 text-dark">
                 <i className="bi bi-houses-fill"></i>
               </Link>
             </div>

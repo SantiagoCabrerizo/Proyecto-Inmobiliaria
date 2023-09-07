@@ -42,7 +42,7 @@ export const ContactDetails = () => {
                         <li className="list-group-item"><strong>Dirección: </strong>{inmueble[0][0].direccion}</li>
                         <li className="list-group-item"><strong>Características: </strong>{inmueble[0][0].caracteristicas}</li>
                         <li className="list-group-item"><strong>Tipo de Inmueble: </strong>{inmueble[0][0].tiposInmueble}</li>
-                        <li className="list-group-item"><strong>Valor: </strong>{inmueble[0][0].valor}</li>
+                        <li className="list-group-item"><strong>Valor: </strong>${inmueble[0][0].valor}</li>
                     </ul>
                 </div>
                 <div className="mt-2">

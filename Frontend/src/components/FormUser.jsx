@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import UserService from '../services/UserService';
-import { AxiosError } from 'axios';
-import LoginService from '../services/LoginService';
 
 export const FormUser = () => {
 
@@ -25,13 +23,12 @@ export const FormUser = () => {
 
     try {
       const response = await UserService.createUsers(formData)
-      const token = response.data.token
-      localStorage.setItem('token', token)
-
+      
       navigate("/home")
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setError(err.response.data);
+        console.log(err)
       }
     }
   }

@@ -15,6 +15,7 @@ import { Logout } from "./components/Logout";
 import { HomeClient } from "./components/HomeClient";
 import { HomeEnte } from './components/HomeEnte';
 import { Perfil } from "./components/Perfil";
+import { Propiedades } from "./components/Propiedades";
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
     const currentPath = window.location.pathname;
 
     // Lista de rutas que requieren autenticación
-    const protectedRoutes = ['/home', '/logout', '/perfil'];
+    const protectedRoutes = ['/home', '/logout'];
 
     if (!isAuthenticated && protectedRoutes.includes(currentPath)) {
       navigate("/")
@@ -55,6 +56,7 @@ function App() {
         <Route path="/registro_i" element={<FormInmueble />} />
 
         <Route path="/perfil" element={localStorage.getItem('token') ? <Perfil /> : <LogIn />} />
+        <Route path="/propiedades" element={localStorage.getItem('token') ? <Propiedades/> : <LogIn />} />
         <Route path="/logout" element={<Logout />} />
 
       </Routes>

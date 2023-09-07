@@ -24,8 +24,16 @@ class InmuebleService {
     getInmuebleById(inmuebleId) {
         return axios.get(URL + inmuebleId);
     }
-    /* getInmuebleByUser(userId) {
-      return axios.get(URL + userId);
-    } */
+
+    getInmuebleByUser(token) {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
+        return axios.get(URL + "listarInmueblesEnte", config);
+    }
+
+
 }
 export default new InmuebleService();

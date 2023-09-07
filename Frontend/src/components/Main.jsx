@@ -56,8 +56,14 @@ export const Main = () => {
                     </div>
                 </div>
             </section>
-            {<About />}
-            {<Projects />}           
+
+            <div id='nosotros'>
+                {<About />}
+            </div>
+            <div id='venta'>
+                {<Projects />}
+            </div>
+
         </div>
     )
 }

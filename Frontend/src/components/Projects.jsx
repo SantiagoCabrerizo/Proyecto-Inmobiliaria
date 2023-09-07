@@ -66,11 +66,6 @@ export const Projects = () => {
                             </div>
                         </div>
                     ))}
-                    <div className='container text-center mt-2'>
-                        <Link to={"/registro"} className='link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'>
-                            Ver más
-                        </Link>
-                    </div>
                 </div>
             </div>
         </div>

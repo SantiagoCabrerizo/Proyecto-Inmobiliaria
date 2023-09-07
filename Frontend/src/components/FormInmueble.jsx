@@ -195,7 +195,7 @@ export const FormInmueble = () => {
               <button className="btn btn-outline-primary py-2" type="submit">
                 Registrar
               </button>
-              <Link to={"/"} className="btn btn-outline-secondary py-2 me-1">
+              <Link to={"/home"} className="btn btn-outline-secondary py-2 me-1">
                 Cancelar
               </Link>
             </div>
