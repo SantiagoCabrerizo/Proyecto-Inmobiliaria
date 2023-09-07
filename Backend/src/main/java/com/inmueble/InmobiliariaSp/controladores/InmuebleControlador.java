@@ -32,33 +32,33 @@ public class InmuebleControlador {
 
     @Autowired
     private InmuebleRepositorio inmuebleRepositorio;
-    
+
     @Autowired
     private InmuebleServicio inmuebleServicio;
-    
+
     @Autowired
     private ImagenServicio imagenServicio;
-    
+
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/inmuebles")
-    public List<Inmueble> listarUsuarios() {
+    public List<Inmueble> listarInmuebles() {
         return inmuebleRepositorio.findAll();
     }
 
     @PreAuthorize("hasRole('ROLE_ENTE')")
     @PostMapping("/registroInmueble")
     public ResponseEntity<String> ingresarInmueble(@ModelAttribute InmuebleForm inmuebleForm,
-                                               @RequestParam("foto") MultipartFile foto,
-                                               HttpServletRequest request) throws MiException {
+            @RequestParam("foto") MultipartFile foto,
+            HttpServletRequest request) throws MiException {
         String token = jwtTokenProvider.resolveToken(request);
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
             String userId = jwtTokenProvider.getUserIdFromJWT(token);
             String userRol = jwtTokenProvider.getRolesFromJWT(token).toString();  // Obtener los roles del token
-            System.out.println("UserId:"+userId);
-            System.out.println("UserRol:"+userRol);
+            System.out.println("UserId:" + userId);
+            System.out.println("UserRol:" + userRol);
             try {
                 Inmueble inmueble = inmuebleServicio.crearInmuebleDesdeInmuebleForm(inmuebleForm, userId);
                 imagenServicio.guardar(foto, inmueble.getId());
@@ -70,7 +70,6 @@ public class InmuebleControlador {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token inválido");
         }
     }
-    
 
     //Get User By Id
     @GetMapping("/{id}")
@@ -88,12 +87,18 @@ public class InmuebleControlador {
             return new ResponseEntity<>("Error al eliminar el Inmueble", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     @GetMapping("/listar")
-    public Page<Object[]> getInmueblesWithOffset(@RequestParam String pagina, @RequestParam String cantidad) {
-        return inmuebleServicio.getInmueblesDisponiblesWithOffset(pagina, cantidad);
+    public Page<Object[]> getInmueblesWithOffset() {
+        return inmuebleServicio.getInmueblesDisponiblesWithOffset("0", "6");
     }
-    
+
+    @GetMapping("/listars")
+    @PreAuthorize("hasRole('CLIENT') or hasRole('ENTE')")
+    public List<Inmueble> getInmueblesAll() {
+        return inmuebleRepositorio.findAll();
+    }
+
     @PreAuthorize("hasRole('ROLE_ENTE')")
     @GetMapping("/listarEnte")
     public Page<Object[]> getInmueblesWithOffsetSinDueño(@RequestParam String pagina, @RequestParam String cantidad, HttpServletRequest request) throws MiException {
@@ -102,8 +107,8 @@ public class InmuebleControlador {
         if (token != null && jwtTokenProvider.validateToken(token)) {
             userId = jwtTokenProvider.getUserIdFromJWT(token);
             String userRol = jwtTokenProvider.getRolesFromJWT(token).toString();  // Obtener los roles del token
-            System.out.println("UserId:"+userId);
-            System.out.println("UserRol:"+userRol);
+            System.out.println("UserId:" + userId);
+            System.out.println("UserRol:" + userRol);
         }
         return inmuebleServicio.getInmueblesDisponiblesWithOffsetSinDueño(pagina, cantidad, userId);
     }

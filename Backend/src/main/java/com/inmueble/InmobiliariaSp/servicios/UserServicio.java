@@ -2,9 +2,11 @@ package com.inmueble.InmobiliariaSp.servicios;
 
 import com.inmueble.InmobiliariaSp.config.UserDetailsImpl;
 import com.inmueble.InmobiliariaSp.contenedores.UserForm;
+import com.inmueble.InmobiliariaSp.entidad.Inmueble;
 import com.inmueble.InmobiliariaSp.entidad.User;
 import com.inmueble.InmobiliariaSp.enumeraciones.Rol;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
+import com.inmueble.InmobiliariaSp.repositorios.InmuebleRepositorio;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +23,9 @@ public class UserServicio implements UserDetailsService {
 
     @Autowired
     private UserRepositorio userRepositorio;
+    
+    @Autowired
+    private InmuebleRepositorio inmuebleRepositorio;
     
     @Transactional
     public void crearUsuarioDesdeUserForm(UserForm userForm) throws MiException {
@@ -112,4 +117,44 @@ public class UserServicio implements UserDetailsService {
 
         return UserDetailsImpl.build(user);
     }
+    
+    public void deleteById (String id) throws MiException {
+        
+        userRepositorio.deleteById(id);
+    }
+    
+    public void validarDeleteUser (String id) throws MiException {
+        Optional<User> optionaluser = userRepositorio.findById(id);
+        User user = new User();
+        if (optionaluser.isPresent()){
+            user = optionaluser.get();
+        } else {
+            throw new MiException("El id de usuario no se ha encontrado");
+        }
+        List<Inmueble> inmuebleDueño = inmuebleRepositorio.findByDueño(user);
+        List<Inmueble> inmuebleInquilino = inmuebleRepositorio.findByInquilino(user);
+        if (!inmuebleDueño.isEmpty()){
+            throw new MiException("El usuario tiene un inmueble asociado, es dueño");
+        }
+        if (!inmuebleInquilino.isEmpty()){
+            throw new MiException("El usuario tiene un inmueble asociado, es inquilino");
+        }
+    }
+    
+    public void modificarUserComoClient (UserForm userForm, String userId) throws MiException {
+        Optional<User> optionaluser = userRepositorio.findById(userId);
+        User user = new User();
+        if (optionaluser.isPresent()){
+            user = optionaluser.get();
+        } else {
+            throw new MiException("El id de usuario no se ha encontrado");
+        }
+        if(isEmailUnique(userForm.getEmail())) {
+            throw new MiException("El email ingresado ya se encuentra registrado.");
+        }
+        
+        user.setEmail(userForm.getEmail());
+        userRepositorio.save(user);
+    }
+    
 }

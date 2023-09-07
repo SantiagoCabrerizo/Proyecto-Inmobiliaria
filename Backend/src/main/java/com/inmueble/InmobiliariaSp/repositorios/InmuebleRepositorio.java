@@ -17,6 +17,7 @@ public interface InmuebleRepositorio extends JpaRepository<Inmueble, String> {
     Inmueble findByDireccion(String direccion);
 
     List<Inmueble> findByDueño(User dueño);
+    List<Inmueble> findByInquilino(User inquilino);
 
     @Query("SELECT i, MAX(im.contenido) AS primeraImagenContenido "
             + "FROM Inmueble i "

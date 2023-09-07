@@ -1,4 +1,4 @@
-import React from 'react'
+ import React from 'react'
 import { Link } from 'react-router-dom';
 
 
@@ -21,11 +21,18 @@ export const Header = () => {
 
 
               {localStorage.getItem('token') ? (
+                <ul className="navbar-nav d-flex align-items-center" >
+                <li>
+                  <Link to={"/home"} className='nav-link active'>
+                    Home
+                  </Link>
+                </li>
                 <li>
                   <Link to={"/logout"} className='nav-link active'>
                     Cerrar Sesión
                   </Link>
                 </li>
+                  </ul>
               ) : (
                 <>
                   <li className="nav-item">

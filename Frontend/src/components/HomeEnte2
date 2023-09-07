@@ -1,0 +1,56 @@
+import React from "react";
+
+export const HomeEnte = () => {
+  const date = new Date().getFullYear();
+  return (
+    <div className="container mt-4">
+      <div className="row justify-content-center text-center">
+        <div className="col-md-6">
+          <h1>Mis Gestiones</h1>
+          <p class="fs-1 fw-medium mb-4 mt-3">Gestiona tus propiedades</p>
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col-md-6 text-center mb-4">
+          <div className="card">
+            <div className="card-body">
+              <h2>Ingresar Propiedad</h2>
+              
+              <a
+                href="/registro_i"
+                className="btn btn-outline-primary py-2"
+              >
+                Registrar Nueva Propiedad
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col-md-6 text-center">
+          <div className="card">
+            <div className="card-body">
+              <h2>Mis Propiedades</h2>
+              <p>Administra tus propiedades aquí.</p>
+              <a
+                href="/mis-propiedades"
+                className="btn btn-outline-primary py-2"
+              >
+                Ver Propiedades
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row justify-content-center">
+        <div className="col-md-6 text-center mb-4">
+
+
+      <img class="hero-inferior-imagen img-fluid pb-4" src="public/logo_header.jpeg" alt="imagen hero logo"></img>
+      </div>
+      </div>
+      <hr className="featurette-divider" />
+      <p className="mt-4 mb-4 text-body-secondary">&copy; {date}</p>
+    </div>
+  );
+}; 
