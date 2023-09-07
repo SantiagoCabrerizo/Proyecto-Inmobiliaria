@@ -10,8 +10,12 @@ class InmuebleService {
         };
         return axios.post(URL + "registroInmueble", inmuebleForm, config);
     }
-    getInmuebleAll() {
-        return axios.get(URL + "listar");
+    getInmuebleAll(pagina, cantidad) {
+        const params = {
+            cantidad: cantidad,
+            pagina: pagina
+        };
+        return axios.get(`${URL}listar`, { params });
     }
 }
 export default new InmuebleService();

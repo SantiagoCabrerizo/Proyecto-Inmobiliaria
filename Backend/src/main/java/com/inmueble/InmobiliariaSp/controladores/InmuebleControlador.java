@@ -1,6 +1,7 @@
 package com.inmueble.InmobiliariaSp.controladores;
 
 import com.inmueble.InmobiliariaSp.config.JwtTokenProvider;
+import com.inmueble.InmobiliariaSp.contenedores.InfoDTO;
 import com.inmueble.InmobiliariaSp.contenedores.InmuebleForm;
 import com.inmueble.InmobiliariaSp.entidad.Inmueble;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
@@ -90,8 +91,8 @@ public class InmuebleControlador {
     }
     
     @GetMapping("/listar")
-    public Page<Object[]> getInmueblesWithOffset() {
-        return inmuebleServicio.getInmueblesDisponiblesWithOffset("0" , "6");
+    public Page<Object[]> getInmueblesWithOffset(@RequestParam("pagina") String pagina, @RequestParam("cantidad") String cantidad) {
+        return inmuebleServicio.getInmueblesDisponiblesWithOffset(pagina , cantidad);
     }
     
 //    @GetMapping("/listar")
