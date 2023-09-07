@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author 4rm4c
  */
 public class InmuebleForm {
-
+    private String id;
     private String direccion;
     private String caracteristicas;
     private String tiposInmueble;
@@ -28,6 +28,17 @@ public class InmuebleForm {
         this.tipoNegocio = tipoNegocio;
         this.valor = valor;
         this.foto = foto;
+    }
+
+    public InmuebleForm() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDireccion() {

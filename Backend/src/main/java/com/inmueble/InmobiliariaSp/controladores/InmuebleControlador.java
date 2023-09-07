@@ -73,10 +73,10 @@ public class InmuebleControlador {
     }
     
 
-    //Get User By Id
+
     @GetMapping("/{id}")
-    public Inmueble getById(@PathVariable String id) {
-        return inmuebleRepositorio.getReferenceById(id);
+    public List<Object[]> getByIdConImagen(@PathVariable String id) {
+        return inmuebleRepositorio.getInmuebleByIdConImagen(id);
     }
 
     //Delete Users
