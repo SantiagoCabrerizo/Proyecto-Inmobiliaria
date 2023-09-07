@@ -1,31 +1,89 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom';
+/* 
+import React, { useState, useEffect } from "react";
+import InmuebleService from "../services/InmuebleService";
+import { base64StringToBlob } from "blob-util";
 
 export const ContactDetails = () => {
+  const [inmueble, setInmueble] = useState(null);
 
-    useEffect(()=>{
-        window.scrollTo(0, 0)
-    })
+  const inmuebleId = localStorage.getItem("selectedInmuebleId"); // El ID del inmueble que deseas obtener
 
-    return (
-        <div>
-            <div className="container shadow p-3 mb-5 bg-body-tertiary rounded mt-3">
-                <div className="row featurette">
-                    <div className="col-md-7 order-md-2">
-                        <h2 className="featurette-heading fw-normal lh-1">Contact Name</h2>
-                        <p className="lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto ut beatae placeat, ipsa laborum aspernatur est excepturi temporibus tenetur consectetur doloribus nihil doloremque quis eum modi ad reiciendis harum dolores?</p>
-                    </div>
-                    <div className="col-md-5 overflow-auto">
-                        <img className="rounded" width={500} src="https://api-prod.corelogic.com/trestle/Media/SEFMIAMI.SEFMIAMI_MIAMI/Property/PHOTO-jpeg/1040219637/1/MzI0MC8yMDI5LzY2/NjYvNTQ1OC8xNjkxMTE4NDAz/zPAmPS5zlfKHc9ewjqenKHsgd8eilllx9fhnaUA_zi8" alt="Listing A11417393 Photo 0" />
-                    </div>
-                </div>
-                <div className='mt-3'>
-                    <Link to={"/"}>
-                        <i className="bi bi-arrow-left"></i>
-                    </Link>
-                </div>
-            </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await InmuebleService.getInmuebleById(inmuebleId);
+        setInmueble(response.data);
+      } catch (error) {
+        console.error("Error al obtener el inmueble", error);
+      }
+    };
 
-        </div>
-    )
-}
+    fetchData();
+  }, []);
+
+  if (!inmueble) {
+    return <div>Cargando...</div>;
+  }
+
+  return (
+    <div>
+      <h1>ID: {inmueble[0][0].id}</h1>
+      <p>Dirección: {inmueble[0][0].direccion}</p>
+      <p>Características: {inmueble[0][0].caracteristicas}</p>
+      <p>Tipo de Inmueble: {inmueble[0][0].tiposInmueble}</p>
+
+      <img
+        src={`data:image/png;base64,${inmueble[0][1]}`}
+        alt="Imagen del inmueble"
+      />
+    </div>
+  );
+};
+ */
+
+import React, { useState, useEffect } from "react";
+import InmuebleService from "../services/InmuebleService";
+import { base64StringToBlob } from "blob-util";
+
+export const ContactDetails = () => {
+  const [inmueble, setInmueble] = useState(null);
+
+  const inmuebleId = localStorage.getItem("selectedInmuebleId"); // El ID del inmueble que deseas obtener
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await InmuebleService.getInmuebleById(inmuebleId);
+        setInmueble(response.data);
+      } catch (error) {
+        console.error("Error al obtener el inmueble", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!inmueble) {
+    return <div>Cargando...</div>;
+  }
+
+  return (
+    <div className="card">
+      <img
+        src={`data:image/png;base64,${inmueble[0][1]}`}
+        className="card-img-top w-50" // Clase para hacer que la imagen ocupe el 50% del ancho de la tarjeta
+        alt="Imagen del inmueble"
+      />
+      <div className="card-body">
+        <h5 className="card-title">ID: {inmueble[0][0].id}</h5>
+        <p className="card-text">Dirección: {inmueble[0][0].direccion}</p>
+        <p className="card-text">
+          Características: {inmueble[0][0].caracteristicas}
+        </p>
+        <p className="card-text">
+          Tipo de Inmueble: {inmueble[0][0].tiposInmueble}
+        </p>
+      </div>
+    </div>
+  );
+};

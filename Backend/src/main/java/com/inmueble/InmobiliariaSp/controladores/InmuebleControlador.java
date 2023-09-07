@@ -71,10 +71,9 @@ public class InmuebleControlador {
         }
     }
 
-    //Get User By Id
     @GetMapping("/{id}")
-    public Inmueble getById(@PathVariable String id) {
-        return inmuebleRepositorio.getReferenceById(id);
+    public List<Object[]> getByIdConImagen(@PathVariable String id) {
+        return inmuebleRepositorio.getInmuebleByIdConImagen(id);
     }
 
     //Delete Users
@@ -87,10 +86,10 @@ public class InmuebleControlador {
             return new ResponseEntity<>("Error al eliminar el Inmueble", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     @GetMapping("/listar")
-    public Page<Object[]> getInmueblesWithOffset() {
-        return inmuebleServicio.getInmueblesDisponiblesWithOffset("0", "6");
+    public Page<Object[]> getInmueblesWithOffset(@RequestParam("pagina") String pagina, @RequestParam("cantidad") String cantidad) {
+        return inmuebleServicio.getInmueblesDisponiblesWithOffset(pagina , cantidad);
     }
 
     @GetMapping("/listars")
