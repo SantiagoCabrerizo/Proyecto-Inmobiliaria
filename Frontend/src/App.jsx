@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { Logout } from "./components/Logout";
 import { HomeClient } from "./components/HomeClient";
 import { HomeEnte } from './components/HomeEnte';
+import { Perfil } from "./components/Perfil";
 
 function App() {
 
@@ -27,14 +28,13 @@ function App() {
     const currentPath = window.location.pathname;
 
     // Lista de rutas que requieren autenticación
-    const protectedRoutes = ['/home', '/logout'];
-
+    const protectedRoutes = ['/home', '/logout', '/perfil'];
 
     if (!isAuthenticated && protectedRoutes.includes(currentPath)) {
       navigate("/")
     }
-  }, [navigate])
 
+  }, [navigate])
 
   return (
     <>
@@ -42,19 +42,19 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/contact" element={<ContactDetails />} />
-        <Route path="/registro" element={<FormUser />} />
+        <Route path="/registro" element={localStorage.getItem('token') ? <Logout /> : <FormUser />} />
 
         <Route path="/login" element={<LogIn />}></Route>
 
-        <Route path="/home" element={localStorage.getItem('token') ? 
-          (rol == 'ROLE_CLIENT' ? <HomeClient/> : rol == 'ROLE_ENTE' ? <HomeEnte/> : (<LogIn/>)) : <LogIn />}   
+        <Route path="/home" element={localStorage.getItem('token') ?
+          (rol == 'ROLE_CLIENT' ? <HomeClient /> : rol == 'ROLE_ENTE' ? <HomeEnte /> : (<LogIn />)) : <LogIn />}
         />
 
         <Route path="/usuarios" element={<TestUser />} />
         <Route path="/usuarios/:id" element={<TestUserDetails />} />
         <Route path="/registro_i" element={<FormInmueble />} />
 
-
+        <Route path="/perfil" element={localStorage.getItem('token') ? <Perfil /> : <LogIn />} />
         <Route path="/logout" element={<Logout />} />
 
       </Routes>

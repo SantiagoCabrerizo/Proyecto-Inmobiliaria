@@ -1,18 +1,9 @@
-
 package com.inmueble.InmobiliariaSp.controladores;
 
-
-import com.inmueble.InmobiliariaSp.entidad.Inmueble;
-import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.InmuebleRepositorio;
 import com.inmueble.InmobiliariaSp.servicios.InmuebleServicio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +14,7 @@ public class EnteControlador {
 
     @Autowired
     private InmuebleRepositorio inmuebleRepositorio;
-    
+
     @Autowired
     private InmuebleServicio inmuebleServicio;
 
@@ -32,7 +23,6 @@ public class EnteControlador {
 //    public List<Inmueble> listarInmuebles(@PathVariable String enteId) {
 //        return inmuebleRepositorio.findByDueño();
 //    }
-
 //    @PostMapping("/inmueble/alta")
 //    public ResponseEntity<String> crearInmueble(InmuebleForm inmuebleForm) throws MiException {
 //        try {

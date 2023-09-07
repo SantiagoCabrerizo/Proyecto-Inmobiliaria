@@ -1,40 +1,78 @@
-import React from 'react'
-import { Project } from './Project'
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import InmuebleService from "../services/InmuebleService";
+import { base64StringToBlob } from "blob-util";
+import UserService from "../services/UserService";
 
 export const Projects = () => {
+
+    const handleClick = (inmuebleId) => {
+        // Al hacer clic en el enlace, se ejecutará esta función.
+        localStorage.setItem("selectedInmuebleId", inmuebleId);
+    };
+    const [inmueble, setInmueble] = useState({ content: [] });
+
+    useEffect(() => {
+        InmuebleService.getInmuebleAll("0", "50")
+            .then((res) => {
+                setInmueble(res.data);
+            })
+            .catch((error) => {
+                console.error(
+                    "Error al obtener datos o crear la URL de la imagen:",
+                    error
+                );
+            });
+
+    }, []);
+
     return (
-        <>
-            <section id="venta" className="proyectos-recientes seccion-clara d-flex flex-column">
-                <h2 className="seccion-titulo texto-negro">Ventas destacadas</h2>
-                <h3 className="seccion-descripcion">
-                    <i className="bi bi-geo-alt-fill me-1"></i>
-                    Estas son algunas de las propiedades dentro de tu zona...
-                </h3>
-
-
-                <div className="album py-5 bg-body-tertiary">
-                    <div className="container">
-                        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                            <Project />
-                            <Project />
-                            <Project />
-                            <Project />
-                            <Project />
-                            <Project />
+        <div className="album py-5 bg-body-tertiary">
+            <div className="container">
+                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {inmueble.content.map((row, index) => (
+                        <div className="col" key={index}>
+                            <div className="proyecto">
+                                <div className="album py-1 bg-body-tertiary">
+                                    <p className="small text-muted mb-1">{row[0].tipoNegocio}</p>
+                                    <img
+                                        id="imagen"
+                                        alt="Imagen del inmueble"
+                                        src={URL.createObjectURL(
+                                            base64StringToBlob(row[1], "image/jpeg")
+                                        )}
+                                        className="bd-placeholder-img card-img-top" width={500} height={300}
+                                    />
+                                    <div className="overlay">
+                                        <Link to={"/contact"}>
+                                            <i
+                                                className="bi bi-info-circle"
+                                                onClick={() => handleClick(row[0].id)} // Cambiado el evento onClick
+                                            ></i>
+                                        </Link>
+                                    </div>
+                                    <div className="card-body mt-2">
+                                        <p className="small text-muted mb-1">
+                                            Dirección : {row[0].direccion}
+                                        </p>
+                                        <p className="small text-muted mb-1">
+                                            Tipo de Inmueble : ${row[0].valor}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <hr className="featurette-divider" />
+                                </div>
+                            </div>
                         </div>
-
+                    ))}
+                    <div className='container text-center mt-2'>
+                        <Link to={"/registro"} className='link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover'>
+                            Ver más
+                        </Link>
                     </div>
                 </div>
-
-                <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                    <button type="button" className="btn btn-dark">
-                        Ver más
-                        <i className="bi bi-arrow-right-circle ms-2"></i>
-                    </button>
-                </a>
-
-            </section>
-
-        </>
-    )
-}
+            </div>
+        </div>
+    );
+};

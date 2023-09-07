@@ -20,24 +20,28 @@ export const LogIn = () => {
 
   const [error, setError] = useState("")
 
-  const onSubmit = async (data) => { 
+  const onSubmit = async (data) => {
+
+    const formData = new FormData();
+    formData.append("username", data.username);
+    formData.append("password", data.password);
 
     try {
-      const response = await LoginService.loginUsers(data)
+      const response = await LoginService.loginUsers(formData)
       const token = response.data.token
-      
+
       const decodedToken = JSON.parse(atob(token.split('.')[1]))
       const rol = decodedToken.roles;
+      const userId = decodedToken.sub
 
-      
       localStorage.setItem('token', token);
       localStorage.setItem('roles', rol)
-      
+      localStorage.setItem('sub', userId)
+
       navigate("/home")
-      
-      
+
     } catch (err) {
-      if (err.response && err.response.status === 401){
+      if (err.response && err.response.status === 401) {
         setError("Usuario no encontrado")
       }
     }

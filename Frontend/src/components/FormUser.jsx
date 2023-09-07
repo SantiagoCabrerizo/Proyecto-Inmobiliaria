@@ -28,7 +28,7 @@ export const FormUser = () => {
       const token = response.data.token
       localStorage.setItem('token', token)
 
-      navigate("/home-client")
+      navigate("/home")
     } catch (err) {
       if (err.response && err.response.status === 400) {
         setError(err.response.data);
@@ -161,7 +161,7 @@ export const FormUser = () => {
             <hr className='featurette-divider' />
 
             <p className="mb-3 fs-6 fw-normal">¿Ya tienes una cuenta?
-              <span> <Link to={"/ingresar"} className='link-underline link-underline-opacity-0'>Inicia sesión</Link></span></p>
+              <span> <Link to={"/login"} className='link-underline link-underline-opacity-0'>Inicia sesión</Link></span></p>
             <p className="mt-4 mb-4 text-body-secondary">&copy; {date}</p>
           </form>
 

@@ -9,21 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
-
-
 @Entity
 public class Transacciones {
 
-@Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-@ManyToOne
+    @ManyToOne
     private Inmueble inmueble;
 
     private String nombre;
-    
-        @Enumerated(EnumType.STRING)
+
+    @Enumerated(EnumType.STRING)
     private TipoTransaccion tipoTransaccion;
 
     public Long getId() {

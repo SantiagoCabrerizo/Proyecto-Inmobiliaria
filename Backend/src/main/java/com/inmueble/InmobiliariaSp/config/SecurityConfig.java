@@ -22,9 +22,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-    securedEnabled = true,
-    jsr250Enabled = true,
-    prePostEnabled = true
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -43,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/public/**").permitAll() // Rutas públicas
                 .antMatchers(HttpMethod.POST, "/api/user/registro").anonymous() // Permitir POST para registro
                 .antMatchers(HttpMethod.POST, "/api/auth/login").anonymous()
+                .antMatchers(HttpMethod.GET, "/api/inmueble/listar").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/inmueble/{id}").permitAll()
                 .anyRequest().authenticated() // Otras rutas requieren autenticación
                 .and()
                 .exceptionHandling()

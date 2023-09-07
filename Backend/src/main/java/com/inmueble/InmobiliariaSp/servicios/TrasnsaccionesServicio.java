@@ -1,6 +1,5 @@
 package com.inmueble.InmobiliariaSp.servicios;
 
-
 import com.inmueble.InmobiliariaSp.entidad.Inmueble;
 import com.inmueble.InmobiliariaSp.entidad.Transacciones;
 import com.inmueble.InmobiliariaSp.enumeraciones.TipoTransaccion;

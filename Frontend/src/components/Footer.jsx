@@ -25,7 +25,7 @@ export const Footer = () => {
                     <a href="" target="_blank" rel="noopener noreferrer">
                         <i className="bi bi-twitter"></i>
                     </a>
-                    <a href="" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/SantiagoCabrerizo/Proyecto-Inmobiliaria" target="_blank" rel="noopener noreferrer">
                         <i className="bi bi-github"></i>
                     </a>
                     <a href="" target="_blank" rel="noopener noreferrer">
@@ -40,11 +40,13 @@ export const Footer = () => {
                 </div>
 
                 <div className="derechos-de-autor">&#169; Creado por Equipo 2 - {date}</div>
-
-                <Link to={"/usuarios"} className='derechos-de-autor'>
-                    Listado usuarios (ADMIN)
-                </Link>
-
+                {
+                    /*
+                     <Link to={"/usuarios"} className='derechos-de-autor'>
+                                    Listado usuarios (ADMIN)
+                                </Link>
+                    */
+                }
                 <button className="btn btn-outline-light fs-5" id='button-handleTop' onClick={handleScrollToTop}>
                     <i className="bi bi-arrow-up"></i>
                 </button>

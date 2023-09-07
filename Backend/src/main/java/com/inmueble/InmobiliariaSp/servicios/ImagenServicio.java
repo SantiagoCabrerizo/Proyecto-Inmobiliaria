@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.inmueble.InmobiliariaSp.servicios;
 
 import com.inmueble.InmobiliariaSp.entidad.Imagen;
@@ -17,13 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ImagenServicio {
-    
+
     @Autowired
     private InmuebleRepositorio inmuebleRepositorio;
     @Autowired
     private ImagenRepositorio imagenRepositorio;
-    
-    
+
     public void guardar(MultipartFile archivo, String inmuebleId) throws MiException {
         if (inmuebleId != null) {
             Optional<Inmueble> respuestaInmueble = inmuebleRepositorio.findById(inmuebleId);
@@ -49,8 +44,8 @@ public class ImagenServicio {
             throw new MiException("El id de inmueble no puede ser nulo");
         }
     }
-    
-    public void actualizar(MultipartFile archivo, String imagenId) throws MiException{
+
+    public void actualizar(MultipartFile archivo, String imagenId) throws MiException {
         if (imagenId != null) {
             Optional<Imagen> respuestaImagen = imagenRepositorio.findById(imagenId);
             if (respuestaImagen.isPresent()) {
@@ -74,5 +69,5 @@ public class ImagenServicio {
             throw new MiException("El id de imagen no puede ser nulo");
         }
     }
-    
+
 }

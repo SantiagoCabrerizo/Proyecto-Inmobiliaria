@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { About } from './About';
 import { Projects } from './Projects';
+import { Link } from 'react-router-dom';
 
 export const Main = () => {
 
@@ -48,7 +49,7 @@ export const Main = () => {
                 <div className="hero-inferior">
                     <div className="container mt-3 mb-5">
                         <h3 className="mb-4">Sobre Nosotros</h3>
-                        <h5 className="mt-4 mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel exercitationem minus facere recusandae, vero nesciunt quia est necessitatibus, quasi, blanditiis modi illo ratione in! Deserunt amet autem magni quod ratione?</h5>
+                        <h5 className="mt-4 mb-5">Somos más que una inmobiliaria; somos parte de su comunidad. Con un conocimiento profundo de cada vecindario, ofrecemos un asesoramiento personalizado y un proceso simplificado. En Mr. House Inmobiliaria, estamos aquí para hacer realidad sus sueños de propiedad.</h5>
                     </div>
                     <div>
                         <img className="hero-inferior-imagen img-fluid pb-4" src="public/logo_header.jpeg" alt="imagen hero logo" />
@@ -56,7 +57,7 @@ export const Main = () => {
                 </div>
             </section>
             {<About />}
-            {<Projects />}
+            {<Projects />}           
         </div>
     )
 }

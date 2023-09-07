@@ -12,8 +12,12 @@ class UserService {
         return axios.post(URL + "registro", user)
     }
 
-    getById(userId) {
-        return axios.get(URL + userId)
+    getByIdWithToken(userId, token) {
+        return axios.get(`${URL}${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        })
     }
 
     deleteUser(userId) {

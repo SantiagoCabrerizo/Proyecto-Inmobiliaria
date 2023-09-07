@@ -6,6 +6,7 @@ import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
 import com.inmueble.InmobiliariaSp.servicios.UserServicio;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,8 +50,17 @@ public class UserControlador {
 
     //Get User By Id
     @GetMapping("/{id}")
-    public User getById(@PathVariable String id) {
-        return userRepositorio.getReferenceById(id);
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ENTE') or hasRole('CLIENT')")
+    public ResponseEntity<UserForm> getById(@PathVariable String id) {
+        User usuario = userRepositorio.getReferenceById(id);
+        UserForm userForm = new UserForm();
+        userForm.setId(usuario.getId());
+        userForm.setNombre(usuario.getNombre());
+        userForm.setApellido(usuario.getApellido());
+        userForm.setEmail(usuario.getEmail());
+        userForm.setDni(usuario.getDni());
+
+        return ResponseEntity.ok(userForm);
     }
 
     //Delete Users

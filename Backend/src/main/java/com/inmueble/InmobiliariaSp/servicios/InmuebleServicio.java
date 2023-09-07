@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-
 
 @Service
 public class InmuebleServicio {
@@ -36,7 +37,7 @@ public class InmuebleServicio {
         inmuebleAGuardar.setTiposInmueble(inmueble.getTiposInmueble());
         inmuebleRepositorio.save(inmueble);
     }
-    
+
     @Transactional
     public Inmueble crearInmuebleDesdeInmuebleForm(InmuebleForm inmuebleForm, String userId) throws MiException {
         System.out.println(inmuebleForm.toString());
@@ -66,9 +67,20 @@ public class InmuebleServicio {
         inmuebles = inmuebleRepositorio.findAll();
         return inmuebles;
     }
-    
+
     public List<Inmueble> listarInmueblesPorDueño(User dueño) {
         return inmuebleRepositorio.findByDueño(dueño);
+    }
+
+    public Page<Object[]> getInmueblesDisponiblesWithOffset(String pagina, String cantidad) {
+        Pageable pageable = PageRequest.of(Integer.parseInt(pagina), Integer.parseInt(cantidad)); // 6 inmuebles por página
+        return inmuebleRepositorio.getInmueblesDisponiblesWithOffset(pageable);
+    }
+
+    public Page<Object[]> getInmueblesDisponiblesWithOffsetSinDueño(String pagina, String cantidad, String dueñoId) {
+        Pageable pageable = PageRequest.of(Integer.parseInt(pagina), Integer.parseInt(cantidad)); // 6 inmuebles por página
+        User usuario = userRepositorio.getReferenceById(dueñoId);
+        return inmuebleRepositorio.getInmueblesDisponiblesWithOffsetSinDueño(usuario, pageable);
     }
 
 //    @Transactional
@@ -101,7 +113,6 @@ public class InmuebleServicio {
 //            inmuebleRepositorio.save(inmueble);
 //        }
 //    }
-
     public Inmueble getOne(String id) {
         return inmuebleRepositorio.getReferenceById(id);
     }
@@ -111,17 +122,17 @@ public class InmuebleServicio {
             throw new MiException("El id de dueño no puede ser nulo");
         } else {
             Optional<User> respuestaUser = userRepositorio.findById(idDueño);
-            if(!respuestaUser.isPresent()){
+            if (!respuestaUser.isPresent()) {
                 throw new MiException("El id de dueño es incorrecto");
             }
         }
         if (isDireccionUnique(inmueble.getDireccion())) {
             throw new MiException("La direccion ya se encuentra registrado.");
         }
-        if (inmueble.getDireccion()== null || inmueble.getDireccion().isEmpty()) {
+        if (inmueble.getDireccion() == null || inmueble.getDireccion().isEmpty()) {
             throw new MiException("No se ha procesado la direccion");
         }
-        if (inmueble.getCaracteristicas()== null || inmueble.getCaracteristicas().isEmpty()) {
+        if (inmueble.getCaracteristicas() == null || inmueble.getCaracteristicas().isEmpty()) {
             throw new MiException("No se han procesado las caracteristicas");
         }
         boolean validarTiposInmueble = true;
@@ -133,38 +144,38 @@ public class InmuebleServicio {
         }
         if (validarTiposInmueble) {
             throw new MiException("El tipo de inmueble no es válido");
-        }  
+        }
     }
-    
+
     private void validar(InmuebleForm inmuebleForm, String userId) throws MiException {
         if (userId == null) {
             throw new MiException("El id de dueño no puede ser nulo");
         } else {
             Optional<User> respuestaUser = userRepositorio.findById(userId);
-            if(!respuestaUser.isPresent()){
+            if (!respuestaUser.isPresent()) {
                 throw new MiException("El id de dueño es incorrecto");
             }
         }
         if (isDireccionUnique(inmuebleForm.getDireccion())) {
             throw new MiException("La direccion ya se encuentra registrado.");
         }
-        if (inmuebleForm.getDireccion()== null || inmuebleForm.getDireccion().isEmpty()) {
+        if (inmuebleForm.getDireccion() == null || inmuebleForm.getDireccion().isEmpty()) {
             throw new MiException("No se ha procesado la direccion");
         }
-        if (inmuebleForm.getCaracteristicas()== null || inmuebleForm.getCaracteristicas().isEmpty()) {
+        if (inmuebleForm.getCaracteristicas() == null || inmuebleForm.getCaracteristicas().isEmpty()) {
             throw new MiException("No se han procesado las caracteristicas");
         }
         boolean validarTiposInmueble = true;
         TiposInmueble[] validarTInmueble = TiposInmueble.getValues();
         for (TiposInmueble tipo : validarTInmueble) {
-            System.out.println(tipo.toString()+" COMPARADO CON "+inmuebleForm.getTiposInmueble());
+            System.out.println(tipo.toString() + " COMPARADO CON " + inmuebleForm.getTiposInmueble());
             if (tipo.toString().equalsIgnoreCase(inmuebleForm.getTiposInmueble())) {
                 validarTiposInmueble = false;
             }
         }
         if (validarTiposInmueble) {
             throw new MiException("El tipo de inmueble no es válido");
-        }  
+        }
         boolean validarTipoNegocio = true;
         TipoNegocio[] validarTNegocio = TipoNegocio.getValues();
         for (TipoNegocio tipo : validarTNegocio) {
@@ -175,11 +186,11 @@ public class InmuebleServicio {
         if (validarTipoNegocio) {
             throw new MiException("El tipo de inmueble no es válido");
         }
-        if (inmuebleForm.getCaracteristicas()== null || inmuebleForm.getCaracteristicas().isEmpty()) {
+        if (inmuebleForm.getCaracteristicas() == null || inmuebleForm.getCaracteristicas().isEmpty()) {
             throw new MiException("No se ha procesado la direccion");
         }
     }
-    
+
     public boolean isDireccionUnique(String direccion) {
         Inmueble existingInmueble = inmuebleRepositorio.findByDireccion(direccion);
         return existingInmueble != null;

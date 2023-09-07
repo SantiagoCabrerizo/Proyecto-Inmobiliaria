@@ -2,6 +2,7 @@ package com.inmueble.InmobiliariaSp.contenedores;
 
 public class UserForm {
 
+    private String id;
     private String nombre;
     private String apellido;
     private String email;
@@ -16,6 +17,18 @@ public class UserForm {
         this.password = password;
         this.dni = dni;
         this.rol = rol;
+    }
+
+    public UserForm() {
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombre() {

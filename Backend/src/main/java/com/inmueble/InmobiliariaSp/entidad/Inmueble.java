@@ -11,8 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
-
-
 @Entity
 public class Inmueble {
 
@@ -32,8 +30,6 @@ public class Inmueble {
     private TipoNegocio tipoNegocio;
     private int valor;
 
-    
-            
     public Inmueble() {
     }
 
@@ -60,11 +56,11 @@ public class Inmueble {
     public void setDueño(User dueño) {
         this.dueño = dueño;
     }
-    
+
     public User getInquilino() {
         return inquilino;
     }
-    
+
     public void setInquilino(User inquilino) {
         this.inquilino = inquilino;
     }
@@ -105,6 +101,5 @@ public class Inmueble {
     public void setCaracteristicas(String caracteristicas) {
         this.caracteristicas = caracteristicas;
     }
-    
 
 }
