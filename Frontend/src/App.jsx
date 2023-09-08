@@ -16,6 +16,7 @@ import { HomeClient } from "./components/HomeClient";
 import { HomeEnte } from './components/HomeEnte';
 import { Perfil } from "./components/Perfil";
 import { Propiedades } from "./components/Propiedades";
+import { HeaderLogueado } from "./components/HeaderLogueado";
 
 function App() {
 
@@ -23,23 +24,21 @@ function App() {
   const rol = localStorage.getItem('roles')
 
   useEffect(() => {
-
     const isAuthenticated = localStorage.getItem('token')
-
     const currentPath = window.location.pathname;
-
-    // Lista de rutas que requieren autenticación
     const protectedRoutes = ['/home', '/logout'];
-
     if (!isAuthenticated && protectedRoutes.includes(currentPath)) {
       navigate("/")
     }
-
   }, [navigate])
 
   return (
     <>
-      <Header />
+      {localStorage.getItem('token') ? (
+        <HeaderLogueado/>
+      ): (
+        <Header/>
+      )}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/contact" element={<ContactDetails />} />
@@ -56,7 +55,7 @@ function App() {
         <Route path="/registro_i" element={<FormInmueble />} />
 
         <Route path="/perfil" element={localStorage.getItem('token') ? <Perfil /> : <LogIn />} />
-        <Route path="/propiedades" element={localStorage.getItem('token') ? <Propiedades/> : <LogIn />} />
+        <Route path="/propiedades" element={localStorage.getItem('token') ? <Propiedades /> : <LogIn />} />
         <Route path="/logout" element={<Logout />} />
 
       </Routes>
