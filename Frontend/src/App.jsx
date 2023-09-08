@@ -10,7 +10,7 @@ import { TestUser } from "./components/TestUser";
 import { TestUserDetails } from "./components/TestUserDetails";
 import { FormInmueble } from "./components/FormInmueble";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Logout } from "./components/Logout";
 import { HomeClient } from "./components/HomeClient";
 import { HomeEnte } from './components/HomeEnte';

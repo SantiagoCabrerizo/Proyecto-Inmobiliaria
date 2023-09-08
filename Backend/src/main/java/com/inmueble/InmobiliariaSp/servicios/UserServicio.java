@@ -23,7 +23,7 @@ public class UserServicio implements UserDetailsService {
     private UserRepositorio userRepositorio;
     
     @Transactional
-    public void crearUsuarioDesdeUserForm(UserForm userForm) throws MiException {
+    public User crearUsuarioDesdeUserForm(UserForm userForm) throws MiException {
         validar(userForm);
         User user = new User();
         user.setApellido(userForm.getApellido());
@@ -39,6 +39,7 @@ public class UserServicio implements UserDetailsService {
         String password = userForm.getPassword();
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         userRepositorio.save(user);
+        return user;
     }
 
     

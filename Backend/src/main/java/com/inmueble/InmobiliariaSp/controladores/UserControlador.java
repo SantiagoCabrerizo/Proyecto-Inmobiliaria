@@ -1,16 +1,22 @@
 package com.inmueble.InmobiliariaSp.controladores;
 
+import com.inmueble.InmobiliariaSp.config.JwtTokenProvider;
+import com.inmueble.InmobiliariaSp.contenedores.JwtResponse;
 import com.inmueble.InmobiliariaSp.contenedores.UserForm;
 import com.inmueble.InmobiliariaSp.entidad.User;
 import com.inmueble.InmobiliariaSp.excepciones.MiException;
 import com.inmueble.InmobiliariaSp.repositorios.UserRepositorio;
 import com.inmueble.InmobiliariaSp.servicios.UserServicio;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +35,11 @@ public class UserControlador {
     private UserRepositorio userRepositorio;
     @Autowired
     private UserServicio userServicio;
-
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    
     //Read Users
     @GetMapping("/usuarios")
     @PreAuthorize("hasRole('ADMIN')")
@@ -39,10 +49,16 @@ public class UserControlador {
 
     //Create Users
     @PostMapping("/registro")
-    public ResponseEntity<String> crearUsuario(@RequestBody UserForm userForm) throws MiException {
+    public ResponseEntity<?> crearUsuario(@RequestBody UserForm userForm) throws MiException {
         try {
-            userServicio.crearUsuarioDesdeUserForm(userForm);
-            return ResponseEntity.ok("Usuario creado exitosamente");
+            User newUser = userServicio.crearUsuarioDesdeUserForm(userForm);
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userForm.getEmail(), userForm.getPassword())
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String token = jwtTokenProvider.generateToken(authentication);
+            return ResponseEntity.ok(new JwtResponse(token));
         } catch (MiException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
