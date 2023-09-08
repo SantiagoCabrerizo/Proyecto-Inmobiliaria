@@ -39,9 +39,9 @@ export const ContactDetails = () => {
                 <h5 className="card-title display-6 m-2">Detalles del Inmueble</h5>
                 <div className="card-body text-start">
                     <ul className="list-group list-group-flush">
+                        <li className="list-group-item"><strong>Tipo de Inmueble: </strong>{inmueble[0][0].tiposInmueble}</li>
                         <li className="list-group-item"><strong>Dirección: </strong>{inmueble[0][0].direccion}</li>
                         <li className="list-group-item"><strong>Características: </strong>{inmueble[0][0].caracteristicas}</li>
-                        <li className="list-group-item"><strong>Tipo de Inmueble: </strong>{inmueble[0][0].tiposInmueble}</li>
                         <li className="list-group-item"><strong>Valor: </strong>${inmueble[0][0].valor}</li>
                     </ul>
                 </div>

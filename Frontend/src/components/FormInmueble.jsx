@@ -21,7 +21,7 @@ export const FormInmueble = () => {
     formData.append("tiposInmueble", data.tiposInmueble);
     formData.append("valor", data.valor);
     formData.append("foto", data.inputImagen[0]);
-    
+
     try {
       InmuebleService.ingresarInmueble(formData, localStorage.getItem('token'));
       navigate("/home")
@@ -30,18 +30,8 @@ export const FormInmueble = () => {
     }
   };
 
-  /* 
-  Direccion
-  Caracteristicas
-  *dueño
-  Tipo de negocio
-  precio
-  tipo de inmueble
-  imagen
-  */
-
   return (
-    <div className="container mt-4 mb-4">
+    <div className="container mt-4 mb-5">
       <div className="row justify-content-center text-center">
         <div className="col-md-4">
           <form onSubmit={handleSubmit(onSubmit)}>

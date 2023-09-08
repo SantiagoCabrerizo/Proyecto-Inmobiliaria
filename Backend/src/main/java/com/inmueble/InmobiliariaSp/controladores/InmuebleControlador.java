@@ -82,7 +82,6 @@ public class InmuebleControlador {
         return inmuebleRepositorio.getInmuebleByIdConImagen(id);
     }
 
-    //Delete Users
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteInmueble(@PathVariable String id) {
         try {

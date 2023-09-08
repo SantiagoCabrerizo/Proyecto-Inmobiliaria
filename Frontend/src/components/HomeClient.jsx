@@ -25,7 +25,7 @@ export const HomeClient = () => {
                         <div className="h-100 p-5 text-bg-dark rounded-3">
                             <h2>Buscar Propiedad</h2>
                             <p>Busca propiedades que se ajusten a tus gustos y necesidades.</p>
-                            <Link to={"/buscar_prop"} className="fs-2 mb-3 text-white">
+                            <Link to={"/listado"} className="fs-2 mb-3 text-white">
                                 <i className="bi bi-house-add-fill"></i>
                             </Link>
                         </div>

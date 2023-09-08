@@ -17,6 +17,7 @@ import { HomeEnte } from './components/HomeEnte';
 import { Perfil } from "./components/Perfil";
 import { Propiedades } from "./components/Propiedades";
 import { HeaderLogueado } from "./components/HeaderLogueado";
+import { ListPropiedades } from "./components/ListPropiedades";
 
 function App() {
 
@@ -56,6 +57,7 @@ function App() {
 
         <Route path="/perfil" element={localStorage.getItem('token') ? <Perfil /> : <LogIn />} />
         <Route path="/propiedades" element={localStorage.getItem('token') ? <Propiedades /> : <LogIn />} />
+        <Route path="/listado" element={<ListPropiedades/>} />
         <Route path="/logout" element={<Logout />} />
 
       </Routes>
